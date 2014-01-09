@@ -76,12 +76,12 @@ namespace Gates.GElements
                     bool[] newInputs = new bool[value];
                     int i = 0;
 
-                    foreach (bool x in inputValues)
+                    foreach (bool x in inputCache)
                     {
                         newInputs[i] = x;
                         i++;
                     }
-                    inputValues = newInputs;
+                    inputCache = newInputs;
                 }
             }
         }
@@ -89,16 +89,16 @@ namespace Gates.GElements
         /// <summary>
         /// Keeps track of the current inputs to this GPrimitive.
         /// </summary>
-        private bool[] _inputValues { get; set; }
-        public bool[] inputValues
+        private bool[] _inputCache { get; set; }
+        public bool[] inputCache
         {
             get
             {
-                return _inputValues;
+                return _inputCache;
             }
             set
             {
-                _inputValues = value;
+                _inputCache = value;
             }
         }
 
@@ -181,7 +181,7 @@ namespace Gates.GElements
                     bool succeeded;
                     try
                     {
-                        inputValues[i] = value;
+                        inputCache[i] = value;
                         this.Propagate();
                         succeeded = true;
                     }
@@ -206,10 +206,15 @@ namespace Gates.GElements
         /// ever need to be changed without the results propagating. 
         /// </summary>
         /// <param name="newOutput">The new output value</param>
-        public void SetOutputAndUpdate(bool newOutput)
+        public void SetOutput(bool newOutput)
         {
-            outputValue = newOutput;
-            outputElement.setInput(outputValue, this);
+            if (outputValue == !newOutput)
+            {
+                outputValue = !outputValue;
+                OnOutputChanged();
+                // outputElement.setInput(outputValue, this);
+            }
+            
         }
 
         public void Propagate()
@@ -219,55 +224,70 @@ namespace Gates.GElements
             switch (type)
             {
                 case 0: // AND
-                    result = inputValues[0] & inputValues[1];
+                    result = inputCache[0] & inputCache[1];
                     if (numInputs > 2)
                     {
-                        for (int i = 2; i < inputValues.Length; i++)
+                        for (int i = 2; i < inputCache.Length; i++)
                         {
-                            result = result & inputValues[i];
+                            result = result & inputCache[i];
                         }
                     }
                     break;
                 case 1: // OR
-                    result = inputValues[0] | inputValues[1];
+                    result = inputCache[0] | inputCache[1];
                     if (numInputs > 2)
                     {
-                        for (int i = 2; i < inputValues.Length; i++)
+                        for (int i = 2; i < inputCache.Length; i++)
                         {
-                            result = result | inputValues[i];
+                            result = result | inputCache[i];
                         }
                     }
                     break;
                 case 2: // NAND
-                    result = inputValues[0] & inputValues[1];
+                    result = inputCache[0] & inputCache[1];
                     if (numInputs > 2)
                     {
-                        for (int i = 2; i < inputValues.Length; i++)
+                        for (int i = 2; i < inputCache.Length; i++)
                         {
-                            result = result & inputValues[i];
+                            result = result & inputCache[i];
                         }
                     }
                     result = !result;
                     break;
                 case 3: // NOR
-                    result = inputValues[0] | inputValues[1];
+                    result = inputCache[0] | inputCache[1];
                     if (numInputs > 2)
                     {
-                        for (int i = 2; i < inputValues.Length; i++)
+                        for (int i = 2; i < inputCache.Length; i++)
                         {
-                            result = result | inputValues[i];
+                            result = result | inputCache[i];
                         }
                     }
                     result = !result;
                     break;
                 case 4: // XOR (currently only supports 2 inputValues)
-                    result = inputValues[0] ^ inputValues[1];
+                    result = inputCache[0] ^ inputCache[1];
                     break;
                 case 5: // Inverter
-                    result = !inputValues[0];
+                    result = !inputCache[0];
                     break;
             }
-            SetOutputAndUpdate(result);
+            SetOutput(result);
+        }
+
+        public event EventHandler OutputChanged;
+
+        /// <summary>
+        /// Create an event handler in the case that this GPrimitive's output
+        /// is changed. 
+        /// </summary>
+        private void OnOutputChanged()
+        {
+            EventHandler handler = OutputChanged;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
         }
     }
 }

@@ -79,5 +79,20 @@ namespace Gates
         {
 
         }
+
+        public event EventHandler<int> OutputChanged;
+
+        /// <summary>
+        /// Create an event in the case that one of this GElement's outputs is changed. 
+        /// </summary>
+        /// <param name="numOutput">The number of the output that has changed</param>
+        protected void OnOutputChanged(int numOutput)
+        {
+            EventHandler<int> handler = OutputChanged;
+            if (handler != null)
+            {
+                handler(this, numOutput);
+            }
+        }
     }
 }
