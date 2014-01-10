@@ -216,7 +216,7 @@ namespace Gates.GElements
         /// ever need to be changed without the results propagating. 
         /// </summary>
         /// <param name="newOutput">The new output value</param>
-        public override void SetOutput(bool newOutput)
+        public void SetOutput(bool newOutput)
         {
             if (outputValue == !newOutput)
             {
@@ -227,7 +227,7 @@ namespace Gates.GElements
             
         }
 
-        public override void Propagate()
+        protected override void Propagate()
         {
             bool result = false;
 

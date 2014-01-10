@@ -64,17 +64,8 @@ namespace Gates
         public abstract void SetInput(GElement inputElement, bool value);
 
         /// <summary>
-        /// Set the output value of this GElement. Generates an event announcing the change.
-        /// I kept this separate from the property itself in case an output would
-        /// ever need to be changed without the results propagating. 
-        /// </summary>
-        /// <param name="newOutput">The new output value</param>
-        public abstract void SetOutput(GElement outputElement, bool newOutput);
-
-        /// <summary>
         /// From the given inputs, determine the output.
-        /// Note: Currently includes no code for timing delays needed by simulation model
         /// </summary>
-        public abstract void Propagate();
+        protected abstract void Propagate();
     }
 }

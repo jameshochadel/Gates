@@ -9,7 +9,7 @@ namespace Gates.Helper_Classes
     /// <summary>
     /// Holds a list of outputs and creates an event (OutputChanged) when one is changed.
     /// </summary>
-    class OutputValuesContainer
+    public class OutputValuesContainer
     {
         /// <summary>
         /// GElement containing this OutputValuesContainer

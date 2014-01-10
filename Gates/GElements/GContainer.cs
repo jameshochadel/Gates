@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gates.Helper_Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,11 +14,19 @@ using Windows.UI.Xaml.Media;
 
 namespace Gates.GElements
 {
+    /// <summary>
+    /// A GElement designed to visually contain other GElements.
+    /// </summary>
     public sealed class GContainer : GComponent
     {
+        private InputValuesContainer inputs;
+        private OutputValuesContainer outputs;
+
         public GContainer()
         {
             this.DefaultStyleKey = typeof(GContainer);
+            inputs = new InputValuesContainer(this);
+            outputs = new OutputValuesContainer();
         }
 
         /// <summary>
@@ -27,24 +36,23 @@ namespace Gates.GElements
         /// </summary>
         /// <param name="inputElement">The element sending the updated output</param>
         /// <param name="value">The new value</param>
-        public override async void SetInput(GElement inputElement, bool value)
+        public override void SetInput(GElement inputElement, bool value)
         {
 
         }
 
         /// <summary>
-        /// Set the output value of this GPrimitive, and notify the GElement
-        /// connected to the output that its value has changed. 
-        /// I kept this separate from the property itself in case an output would
-        /// ever need to be changed without the results propagating. 
+        /// Set the output value of this GContainer & raise an event announcing it.
         /// </summary>
+        /// <param name="outputElement">The output number</param>
         /// <param name="newOutput">The new output value</param>
-        public override void SetOutput(bool newOutput)
+        public void SetOutput(int outputElement, bool newOutput)
         {
-
+            outputs[outputElement] = newOutput;
+            Propagate();
         }
 
-        public override void Propagate()
+        protected override void Propagate()
         {
 
         }

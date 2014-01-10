@@ -12,12 +12,8 @@ namespace Gates.Helper_Classes
     /// last known outputValues. Given a GElement and a bool, the appropriate input can be set 
     /// in response to an OutputChanged event. 
     /// </summary>
-    class InputValuesContainer
+    public class InputValuesContainer
     {
-        /// <summary>
-        /// GElement containing this InputValuesContainer
-        /// </summary>
-        GElement parent = null;
         
         /// <summary>
         /// Maps a GElement to the input it's connected to on parent
@@ -36,7 +32,6 @@ namespace Gates.Helper_Classes
         /// <param name="parent">The GElement containing this InputValuesContainer</param>
         public InputValuesContainer(GElement parent)
         {
-            this.parent = parent;
         }
 
         /// <summary>
@@ -67,7 +62,6 @@ namespace Gates.Helper_Classes
                     if (value == !inputCache[i])
                     {
                         inputCache[i] = value;
-                        parent.Propagate();
                     }
                 }
                 else
