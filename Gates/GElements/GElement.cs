@@ -39,22 +39,6 @@ namespace Gates
         }
 
         /// <summary>
-        /// Keeps track of the current inputs to this GPrimitive.
-        /// </summary>
-        private bool[] _inputCache { get; set; }
-        public bool[] inputCache
-        {
-            get
-            {
-                return _inputCache;
-            }
-            set
-            {
-                _inputCache = value;
-            }
-        }
-
-        /// <summary>
         /// Set the value of a given input for this component.
         /// The input to be set is determined by comparing the sending GElement
         /// to the list of this GElement's inputs. 

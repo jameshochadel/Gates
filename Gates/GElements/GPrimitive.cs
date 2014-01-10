@@ -95,6 +95,7 @@ namespace Gates.GElements
             }
         }
 
+        // Replace with InputValuesContainer
         /// <summary>
         /// Keeps track of the current inputs to this GPrimitive.
         /// </summary>
@@ -140,23 +141,6 @@ namespace Gates.GElements
             set
             {
                 _outputValue = value;
-            }
-        }
-
-        /// <summary>
-        /// The IElement on which setInput() must be called when this GPrimitive's _outputValue
-        /// is updated.
-        /// </summary>
-        private GElement _outputElement { get; set; }
-        public GElement outputElement
-        {
-            get
-            {
-                return _outputElement;
-            }
-            set
-            {
-                _outputElement = value;
             }
         }
 

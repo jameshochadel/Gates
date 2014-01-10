@@ -12,11 +12,6 @@ namespace Gates.Helper_Classes
     public class OutputValuesContainer
     {
         /// <summary>
-        /// GElement containing this OutputValuesContainer
-        /// </summary>
-        GElement parent = null;
-
-        /// <summary>
         /// Array of output outputValues; indices = output numbers
         /// </summary>
         private bool[] outputValues; // TODO: Code to resize this; steal from GPrimitive
@@ -42,6 +37,11 @@ namespace Gates.Helper_Classes
                     OnOutputChanged(i);
                 }
             }
+        }
+
+        public OutputValuesContainer()
+        {
+
         }
 
         // TODO: Remove <int> and replace with something that holds the int and bool

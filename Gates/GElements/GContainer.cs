@@ -38,7 +38,8 @@ namespace Gates.GElements
         /// <param name="value">The new value</param>
         public override void SetInput(GElement inputElement, bool value)
         {
-
+            inputs[inputElement] = value;
+            // TODO: Have above return true/false based on whether anything was changed? Need to know when to Propagate()
         }
 
         /// <summary>

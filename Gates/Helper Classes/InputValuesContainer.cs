@@ -18,7 +18,7 @@ namespace Gates.Helper_Classes
         /// <summary>
         /// Maps a GElement to the input it's connected to on parent
         /// </summary>
-        Dictionary<GElement, int> inputs = new Dictionary<GElement, int>();
+        Dictionary<GElement, int> inputs = new Dictionary<GElement, int>(); // TODO: Choose a good default size for this
 
         /// <summary>
         /// Contains the last known outputValues of each input, with indices corresponding to
@@ -32,6 +32,7 @@ namespace Gates.Helper_Classes
         /// <param name="parent">The GElement containing this InputValuesContainer</param>
         public InputValuesContainer(GElement parent)
         {
+            // Initialize inputCache and Dictionary
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace Gates.Helper_Classes
                 int i = 0;
                 if (inputs.TryGetValue(g, out i))
                 {
-                    if (value == !inputCache[i])
+                    if (value != inputCache[i])
                     {
                         inputCache[i] = value;
                     }
