@@ -30,7 +30,7 @@ namespace Gates.Helper_Classes
             {
                 if (value == !values[i])
                 {
-                    values[i] = !values[i];
+                    values[i] = value;
                     OnOutputChanged(i);
                 }
             }

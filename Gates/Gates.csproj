@@ -112,6 +112,7 @@
     <Compile Include="GElements\GPrimitive.cs" />
     <Compile Include="GElements\GElement.cs" />
     <Compile Include="GElements\GComponent.cs" />
+    <Compile Include="Helper Classes\InputValuesContainer.cs" />
     <Compile Include="Helper Classes\OutputValuesContainer.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
