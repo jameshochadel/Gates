@@ -11,7 +11,15 @@ namespace Gates.Helper_Classes
     /// </summary>
     class OutputValuesContainer
     {
-        private bool[] values;
+        /// <summary>
+        /// GElement containing this OutputValuesContainer
+        /// </summary>
+        GElement parent = null;
+
+        /// <summary>
+        /// Array of output outputValues; indices = output numbers
+        /// </summary>
+        private bool[] outputValues; // TODO: Code to resize this; steal from GPrimitive
 
         /// <summary>
         /// Get & set the appropriate outputs.
@@ -24,18 +32,19 @@ namespace Gates.Helper_Classes
         {
             get
             {
-                return values[i];
+                return outputValues[i];
             }
             set
             {
-                if (value == !values[i])
+                if (value == !outputValues[i])
                 {
-                    values[i] = value;
+                    outputValues[i] = value;
                     OnOutputChanged(i);
                 }
             }
         }
 
+        // TODO: Remove <int> and replace with something that holds the int and bool
         public event EventHandler<int> OutputChanged;
 
         /// <summary>
