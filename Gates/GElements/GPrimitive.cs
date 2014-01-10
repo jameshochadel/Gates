@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+
+// The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
 
 namespace Gates.GElements
 {
@@ -15,7 +24,7 @@ namespace Gates.GElements
     /// Future changes to class may involve replacing current recursive method of
     /// updating GElements with a system of event handlers.
     /// </summary>
-    class GPrimitive : GComponent
+    public sealed class GPrimitive : GComponent
     {
         #region Properties
 
@@ -47,7 +56,7 @@ namespace Gates.GElements
         /// The number of inputs to this GPrimitive.
         /// </summary>
         private int _numInputs { get; set; }
-        public int numInputs
+        public override int numInputs
         {
             get 
             { 
@@ -158,9 +167,10 @@ namespace Gates.GElements
         /// </summary>
         /// <param name="type">The desired type 
         /// (0 = And, 1 = Or, 2 = Nand, 3 = Nor, 4 = Xor, 5 = Invert.)</param>
-        public GPrimitive(int type)
+        public GPrimitive()
         {
-            this.type = type;
+            this.DefaultStyleKey = typeof(GPrimitive);
+            //this.type = 1;
         }
 
         /// <summary>
@@ -170,7 +180,7 @@ namespace Gates.GElements
         /// </summary>
         /// <param name="inputElement">The element sending the updated output</param>
         /// <param name="value">The new value</param>
-        public async void SetInput(GElement inputElement, bool value)
+        public override async void SetInput(GElement inputElement, bool value)
         {
             // Map the sending GElement to its input
             for (int i = 0; i < inputElements.Length; i++)
@@ -206,7 +216,7 @@ namespace Gates.GElements
         /// ever need to be changed without the results propagating. 
         /// </summary>
         /// <param name="newOutput">The new output value</param>
-        public void SetOutput(bool newOutput)
+        public override void SetOutput(bool newOutput)
         {
             if (outputValue == !newOutput)
             {
@@ -217,7 +227,7 @@ namespace Gates.GElements
             
         }
 
-        public void Propagate()
+        public override void Propagate()
         {
             bool result = false;
 

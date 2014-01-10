@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 namespace Gates
 {
@@ -11,14 +17,15 @@ namespace Gates
     /// Base class for all circuit elements in Gates. 
     /// The full connected set of GElements in any given Gates file can
     /// be thought of as a doubly-linked list with branching.
+    /// Inherits from the generic XAML Control.
     /// </summary>
-    abstract class GElement
+    public abstract class GElement : Control
     {
         /// <summary>
         /// The number of inputs to this GPrimitive.
         /// </summary>
         private int _numInputs { get; set; }
-        public int numInputs
+        public virtual int numInputs
         {
             get
             {
@@ -34,65 +41,40 @@ namespace Gates
         /// <summary>
         /// Keeps track of the current inputs to this GPrimitive.
         /// </summary>
-        private bool[] _inputValues { get; set; }
-        public bool[] inputValues
+        private bool[] _inputCache { get; set; }
+        public bool[] inputCache
         {
             get
             {
-                return _inputValues;
+                return _inputCache;
             }
             set
             {
-                _inputValues = value;
+                _inputCache = value;
             }
         }
 
         /// <summary>
         /// Set the value of a given input for this component.
         /// The input to be set is determined by comparing the sending GElement
-        /// to the list of this GPrimitive's inputs. 
+        /// to the list of this GElement's inputs. 
         /// </summary>
         /// <param name="inputElement">The element sending the input</param>
         /// <param name="value">The value to be set</param>
-        internal void setInput(bool inputElement, GPrimitive value)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void SetInput(GElement inputElement, bool value);
 
         /// <summary>
-        /// Set the output value of this GPrimitive, and notify the GElement
-        /// connected to the output that its value has changed. 
+        /// Set the output value of this GElement. Generates an event announcing the change.
         /// I kept this separate from the property itself in case an output would
         /// ever need to be changed without the results propagating. 
         /// </summary>
         /// <param name="newOutput">The new output value</param>
-        public void setOutputAndUpdate(bool newOutput)
-        {
-
-        }
+        public abstract void SetOutput(GElement outputElement, bool newOutput);
 
         /// <summary>
         /// From the given inputs, determine the output.
         /// Note: Currently includes no code for timing delays needed by simulation model
         /// </summary>
-        public void Propagate()
-        {
-
-        }
-
-        public event EventHandler<int> OutputChanged;
-
-        /// <summary>
-        /// Create an event in the case that one of this GElement's outputs is changed. 
-        /// </summary>
-        /// <param name="numOutput">The number of the output that has changed</param>
-        protected void OnOutputChanged(int numOutput)
-        {
-            EventHandler<int> handler = OutputChanged;
-            if (handler != null)
-            {
-                handler(this, numOutput);
-            }
-        }
+        public abstract void Propagate();
     }
 }
