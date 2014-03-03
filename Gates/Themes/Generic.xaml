@@ -6,17 +6,25 @@
     <Style TargetType="local:GPrimitive">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="35" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:GPrimitiveControl">
-                    <Border
+                <ControlTemplate TargetType="local:GPrimitive">
+                    <Image
+                        Height="35"
+                        Source="Assets/gate-and.png"
+                        Source="{x:}"
+                        Width="50"
+                        />
+                    <!--<Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <TextBlock Text="HelloWorld"
                                FontFamily="Segoe UI Light"
                                FontSize="36"/>
-                    </Border>
+                    </Border>-->
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

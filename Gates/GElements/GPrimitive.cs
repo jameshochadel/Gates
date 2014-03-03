@@ -154,7 +154,7 @@ namespace Gates.GElements
         public GPrimitive()
         {
             this.DefaultStyleKey = typeof(GPrimitive);
-            //this.type = 1;
+            this.type = 1;
         }
 
         /// <summary>
@@ -282,6 +282,26 @@ namespace Gates.GElements
             {
                 handler(this, new EventArgs());
             }
+        }
+        
+        /// <summary>
+        /// Update the view when the type is changed
+        /// </summary>
+        /// <param name="type"></param>
+        private void TypeChanged(int type)
+        {
+            switch(type)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+            }
+        }
+
+        private void OnImageLoaded() // replace with OnLoaded and OnTypeChanged?
+        {
+
         }
     }
 }
