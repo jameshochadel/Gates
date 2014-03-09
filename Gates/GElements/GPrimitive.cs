@@ -289,7 +289,7 @@ namespace Gates.GElements
         /// Update the view when the type is changed
         /// </summary>
         /// <param name="type"></param>
-        private void TypeChanged(int type)
+        private void UpdateImage(int type)
         {
             switch(type)
             {

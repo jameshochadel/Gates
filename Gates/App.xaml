@@ -6,6 +6,13 @@
     RequestedTheme="Light"
     >
     <Application.Resources>
-        <x:String x:Key="AppName">Gates</x:String>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
+                <ResourceDictionary Source="/Themes/TextStyles.xaml" />
+                <ResourceDictionary Source="/Themes/EditorStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <x:String x:Key="AppName">Gates</x:String>
+        </ResourceDictionary>
     </Application.Resources>
 </Application> <!--TODO: Cache background images for all GElements-->

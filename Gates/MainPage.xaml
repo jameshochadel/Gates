@@ -8,11 +8,20 @@
     xmlns:common="using:Gates.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:G="using:Gates.GElements"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <ResourceDictionary Source="/Themes/TextStyles.xaml" />
+        <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
+        <!--
+            Collection of grouped items displayed by this page, bound to a subset
+            of the complete item list because items in groups cannot be virtualized
+        -->
+        <CollectionViewSource
+            x:Name="groupedItemsViewSource"
+            Source="{Binding Groups}"
+            IsSourceGrouped="true"
+            ItemsPath="TopItems"/>
+
     </Page.Resources>
 
     <!--
@@ -27,29 +36,60 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="61"/>
+            <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Horizontal scrolling grid -->
+        <GridView
+            x:Name="itemGridView"
+            AutomationProperties.AutomationId="ItemGridView"
+            AutomationProperties.Name="Grouped Items"
+            Grid.RowSpan="2"
+            Padding="116,137,40,46"
+            SelectionMode="None"
+            IsSwipeEnabled="false">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid GroupPadding="0,0,70,0"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,2">
+                                <Button Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
+                                    AutomationProperties.Name="Group Title"
+                                    Style="{StaticResource TextBlockButtonStyle}" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" Margin="0,-11,10,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-11,0,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </GridView.GroupStyle>
+            <Button Content="Button" Click="OnClick"/>
+        </GridView>
+
         <!-- Back button and page title -->
-        <Grid>
+        <Grid Background="{StaticResource GatesEditorToolbarBackgroundThemeBrush}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="61"/>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Margin="10,10,10,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
-                        AutomationProperties.ItemType="Navigation Button"/>
-            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource GatesHeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="10,0,0,12" FontSize="48"/>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <G:GPrimitive x:Name="control1" type="1"/>
-            </StackPanel>
+                        AutomationProperties.ItemType="Navigation Button"
+                        RequestedTheme="Dark"/>
+            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" RequestedTheme="Dark"/>
         </Grid>
-        
     </Grid>
 </Page>
