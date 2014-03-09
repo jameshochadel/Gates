@@ -14,7 +14,6 @@
                     <Image
                         Height="35"
                         Source="Assets/gate-and.png"
-                        Source="{x:}"
                         Width="50"
                         />
                     <!--<Border
@@ -43,4 +42,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
 </ResourceDictionary>

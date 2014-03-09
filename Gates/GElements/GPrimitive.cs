@@ -144,6 +144,7 @@ namespace Gates.GElements
             }
         }
 
+        public Image PrimitiveBackground;
         #endregion
 
         /// <summary>
@@ -154,11 +155,11 @@ namespace Gates.GElements
         public GPrimitive()
         {
             this.DefaultStyleKey = typeof(GPrimitive);
-            this.type = 1;
+            this.type = 1;//TODO: Load background based on type
         }
 
         /// <summary>
-        /// Change the input of the GElement that this GPrimitive outputs to.
+        /// Change the input of this GPrimitive. May remove in favor of event handler
         /// Future note: Add "if" statement to prevent calling Propagate() unless
         /// the value set is different from the value that was already in place.
         /// </summary>

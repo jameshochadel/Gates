@@ -5,4 +5,7 @@
     xmlns:local="using:Gates"
     RequestedTheme="Light"
     >
-</Application>
+    <Application.Resources>
+        <x:String x:Key="AppName">Gates</x:String>
+    </Application.Resources>
+</Application> <!--TODO: Cache background images for all GElements-->
