@@ -8,12 +8,13 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="35" />
+        <Setter Property="IsRightTapEnabled" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:GPrimitive">
                     <Image
                         Height="35"
-                        Source="Assets/gate-and.png"
+                        Source="{Binding Path=GPrimitive.BackgroundPath}"
                         Width="50"
                         />
                     <!--<Border

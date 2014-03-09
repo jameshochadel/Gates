@@ -92,7 +92,7 @@ namespace Gates
 
         #endregion
 
-        private void OnClick(object sender, RoutedEventArgs e)
+        private void EditorNavButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame != null)
             {

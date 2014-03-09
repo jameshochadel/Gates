@@ -119,6 +119,9 @@
     <Compile Include="GElements\GPrimitive.cs" />
     <Compile Include="GElements\GElement.cs" />
     <Compile Include="GElements\GComponent.cs" />
+    <Compile Include="GElements\GPrimitive2.xaml.cs">
+      <DependentUpon>GPrimitive2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper Classes\InputValuesContainer.cs" />
     <Compile Include="Helper Classes\OutputValuesContainer.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -144,6 +147,10 @@
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Common\ReadMe.txt" />
+    <Page Include="GElements\GPrimitive2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Editor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -147,15 +147,27 @@ namespace Gates.GElements
         public Image PrimitiveBackground;
         #endregion
 
+        public string BackgroundPath = "/Assets/gate-and.png";
+
         /// <summary>
-        /// Create a GPrimitive object from an integer representing the desired type.
+        /// Create a GPrimitive object of default type 1 (AND)
         /// </summary>
-        /// <param name="type">The desired type 
-        /// (0 = And, 1 = Or, 2 = Nand, 3 = Nor, 4 = Xor, 5 = Invert.)</param>
         public GPrimitive()
         {
             this.DefaultStyleKey = typeof(GPrimitive);
-            this.type = 1;//TODO: Load background based on type
+            this.type = 1;
+            UpdateImage();
+        }
+
+        /// <summary>
+        /// Create a GPrimitive object from an integer representing the desired type
+        /// </summary>
+        /// <param name="type"></param>
+        public GPrimitive(int type)
+        {
+            this.DefaultStyleKey = typeof(GPrimitive);
+            this.type = type;
+            UpdateImage();
         }
 
         /// <summary>
@@ -288,14 +300,22 @@ namespace Gates.GElements
         /// <summary>
         /// Update the view when the type is changed
         /// </summary>
-        /// <param name="type"></param>
-        private void UpdateImage(int type)
+        private void UpdateImage()
         {
             switch(type)
             {
                 case 0:
+                    //PrimitiveBackground.Source
                     break;
                 case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
                     break;
             }
         }
