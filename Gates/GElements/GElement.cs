@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
-namespace Gates
+namespace Gates.GElements
 {
     /// <summary>
     /// Base class for all circuit elements in Gates. 
@@ -36,6 +36,11 @@ namespace Gates
             {
                 _numInputs = value;
             }
+        }
+
+        public GElement()
+        {
+            this.DefaultStyleKey = typeof(GElement);
         }
 
         /// <summary>

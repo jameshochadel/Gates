@@ -8,23 +8,12 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="35" />
+        <Setter Property="DataContext" Value="GPrimitive" />
         <!--<Setter Property="IsRightTapEnabled" Value="True"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:GPrimitive">
-                    <Image
-                        Height="35"
-                        Source="Assets/gate-and.png"
-                        Width="50"
-                        />
-                    <!--<Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                        <TextBlock Text="HelloWorld"
-                               FontFamily="Segoe UI Light"
-                               FontSize="36"/>
-                    </Border>-->
+                    <Image Height="35" Source="Assets/gate-and.png" Width="50" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -43,5 +32,33 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style TargetType="local:GElement">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:GElement">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    <Style TargetType="local:GPrimitive">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:GPrimitive">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
 </ResourceDictionary>

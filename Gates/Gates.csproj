@@ -115,8 +115,8 @@
     <Compile Include="Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GElements\GContainer.cs" />
     <Compile Include="GElements\GPrimitive.cs" />
+    <Compile Include="GElements\GContainer.cs" />
     <Compile Include="GElements\GElement.cs" />
     <Compile Include="GElements\GComponent.cs" />
     <Compile Include="GElements\GPrimitive2.xaml.cs">
