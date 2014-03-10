@@ -52,7 +52,6 @@
                 Grid.Column="2" 
                 Orientation="Horizontal" 
                 >
-                <G:GPrimitive2 x:Name="testgprim2" />
                 <G:GPrimitive x:Name="ToolbarPrimitiveAnd" Margin="10,0,0,0"/>
                 <G:GPrimitive x:Name="ToolbarPrimitiveOr" Margin="10,0,0,0"/>
                 <G:GPrimitive x:Name="ToolbarPrimitiveNand" Margin="10,0,0,0"/>
