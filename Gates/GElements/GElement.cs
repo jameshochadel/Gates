@@ -19,7 +19,7 @@ namespace Gates
     /// be thought of as a doubly-linked list with branching.
     /// Inherits from the generic XAML Control.
     /// </summary>
-    public abstract class GElement : Control
+    public abstract class GElement : UserControl
     {
         /// <summary>
         /// The number of inputs to this GPrimitive.

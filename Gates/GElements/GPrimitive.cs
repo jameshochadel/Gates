@@ -147,7 +147,7 @@ namespace Gates.GElements
         public Image PrimitiveBackground;
         #endregion
 
-        public string BackgroundPath = "/Assets/gate-and.png";
+        //public string BackgroundPath = "/Assets/gate-and.png";
 
         /// <summary>
         /// Create a GPrimitive object of default type 1 (AND)
@@ -156,7 +156,6 @@ namespace Gates.GElements
         {
             this.DefaultStyleKey = typeof(GPrimitive);
             this.type = 1;
-            UpdateImage();
         }
 
         /// <summary>
