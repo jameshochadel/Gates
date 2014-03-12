@@ -121,6 +121,7 @@
     <Compile Include="GElements\GPrimitive.xaml.cs">
       <DependentUpon>GPrimitive.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GElements\GPrimitiveModel.cs" />
     <Compile Include="Helper Classes\InputValuesContainer.cs" />
     <Compile Include="Helper Classes\OutputValuesContainer.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -135,12 +136,12 @@
     <None Include="Gates_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\gate-and.png" />
-    <Content Include="Assets\gate-inv.png" />
-    <Content Include="Assets\gate-nand.png" />
-    <Content Include="Assets\gate-nor.png" />
-    <Content Include="Assets\gate-or.png" />
-    <Content Include="Assets\gate-xor.png" />
+    <Content Include="Assets\0.png" />
+    <Content Include="Assets\5.png" />
+    <Content Include="Assets\2.png" />
+    <Content Include="Assets\3.png" />
+    <Content Include="Assets\1.png" />
+    <Content Include="Assets\4.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />

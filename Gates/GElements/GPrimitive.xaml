@@ -8,12 +8,13 @@
     mc:Ignorable="d"
     d:DesignHeight="35"
     d:DesignWidth="50"
-    DataContext="GPrimitive.xaml"
     >
 
     <Image
+        x:Name="PrimitiveControlImage"
         Height="35"
-        Source="../Assets/gate-and.png"
         Width="50"
-        />
+        Source="{Binding Path=PrimitiveBackground}"
+        >
+    </Image>
 </UserControl>
