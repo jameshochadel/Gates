@@ -52,11 +52,11 @@
                 Grid.Column="2" 
                 Orientation="Horizontal" 
                 >
-                <G:GPrimitive x:Name="ToolbarPrimitiveAnd" Margin="10,0,0,0"/>
-                <G:GPrimitive x:Name="ToolbarPrimitiveOr" Margin="10,0,0,0"/>
-                <G:GPrimitive x:Name="ToolbarPrimitiveNand" Margin="10,0,0,0"/>
-                <G:GPrimitive x:Name="ToolbarPrimitiveNor" Margin="10,0,0,0"/>
-                <G:GPrimitive x:Name="ToolbarPrimitiveXor" Margin="10,0,0,0"/>
+                <G:GPrimitive x:Name="ToolbarPrimitiveAnd" GateType="0" Margin="10,0,0,0"/>
+                <G:GPrimitive x:Name="ToolbarPrimitiveOr" GateType="1" Margin="10,0,0,0"/>
+                <G:GPrimitive x:Name="ToolbarPrimitiveNand" GateType="2" Margin="10,0,0,0"/>
+                <G:GPrimitive x:Name="ToolbarPrimitiveNor" GateType="3" Margin="10,0,0,0"/>
+                <G:GPrimitive x:Name="ToolbarPrimitiveXor" GateType="4" Margin="10,0,0,0"/>
                 <Button Content="Select Mode" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>

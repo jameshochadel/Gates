@@ -31,6 +31,21 @@ namespace Gates.GElements
             this.InitializeComponent();
         }
 
-        public static DependencyProperty GateType = DependencyProperty.Register("GateType", typeof(string), typeof(GPrimitive), new PropertyMetadata("0"));
+        public int GateType
+        {
+            get { return (int)GetValue(GateTypeProperty); }
+            set { SetValue(GateTypeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for GateType.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GateTypeProperty =
+            DependencyProperty.Register("GateType", typeof(int), typeof(GPrimitive), new PropertyMetadata(0, new PropertyChangedCallback(OnGateTypeChanged)));
+
+        private static void OnGateTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var instance = d as GPrimitive;
+            if (instance != null) {
+                instance.model.UpdateGateType(instance.GateType);
+            }
+        }
     }
 }

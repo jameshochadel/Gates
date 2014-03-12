@@ -97,16 +97,18 @@ namespace Gates.GElements
         public ImageSource PrimitiveBackground { get; set; }
         #endregion
 
+        #region Constructors
         public GPrimitiveModel()
         {
-            UpdateImage();
+            UpdateGateType(0);
         }
 
         public GPrimitiveModel(int gateType)
         {
             GateType = gateType;
-            UpdateImage();
+            UpdateGateType(GateType);
         }
+        #endregion // constructors
 
         /// <summary>
         /// Change the input of this GPrimitive. May remove in favor of event handler
@@ -238,8 +240,9 @@ namespace Gates.GElements
         /// <summary>
         /// Update the view when the type is changed
         /// </summary>
-        private void UpdateImage()
+        public void UpdateGateType(int gateType)
         {
+            GateType = gateType;
             BitmapImage image = new BitmapImage();
             image.UriSource = new Uri(String.Format("ms-appx:/Assets/{0}.png", GateType.ToString()));
             PrimitiveBackground = image;
