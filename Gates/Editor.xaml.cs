@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Gates
 {
     /// <summary>
-    /// A basic page that provides characteristics common to most applications.
+    /// Contains the canvas on which elements can be placed and linked.
     /// </summary>
     public sealed partial class Editor : Page
     {
@@ -106,6 +106,11 @@ namespace Gates
         private void ToolbarPrimitiveAnd_DragLeave(object sender, DragEventArgs e)
         {
 
+        }
+
+        private void CircuitCanvasZoom200_Click(object sender, RoutedEventArgs e)
+        {
+            //CircuitCanvasScrollViewer.ZoomFactor = 2.0;
         }
     }
 }

@@ -26,6 +26,8 @@ namespace Gates.GElements
         private GPrimitiveModel model { get; set; }
         
         // Transform variables
+        // All transform code adapted from Windows 8.1 SDK "AdvancedManipulations" demo.
+        // Potential manipulation code replacement: http://msdn.microsoft.com/en-us/library/windows/apps/hh465387.aspx
         private TransformGroup transformGroup;
         private MatrixTransform previousTransform;
         private CompositeTransform compositeTransform;
@@ -35,6 +37,8 @@ namespace Gates.GElements
         {
             model = new GPrimitiveModel();
             this.DataContext = model;
+
+            this.InitializeComponent();
             
             this.ManipulationMode = ManipulationModes.System | ManipulationModes.TranslateX | ManipulationModes.TranslateY;
             this.ManipulationStarting += new ManipulationStartingEventHandler(ElementManipulationStarting);
@@ -46,8 +50,6 @@ namespace Gates.GElements
             forceManipulationsToEnd = true;
             this.RenderTransform = null;
             InitManipulationTransforms();
-
-            this.InitializeComponent();
         }
 
         #region Manipulation Methods
@@ -89,8 +91,8 @@ namespace Gates.GElements
             }
             //Set the new transform values based on user action
             previousTransform.Matrix = transformGroup.Value;
-            compositeTransform.TranslateX = e.Delta.Translation.X/* / scrollViewer.ZoomFactor*/;
-            compositeTransform.TranslateY = e.Delta.Translation.Y/* / scrollViewer.ZoomFactor*/;
+            compositeTransform.TranslateX = e.Delta.Translation.X /*/ Editor.CircuitCanvasScrollViewer.ZoomFactor*/;
+            compositeTransform.TranslateY = e.Delta.Translation.Y /*/ scrollViewer.ZoomFactor*/;
             e.Handled = true;
         }
 
