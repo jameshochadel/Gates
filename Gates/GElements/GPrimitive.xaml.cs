@@ -22,14 +22,83 @@ namespace Gates.GElements
 {
     public sealed partial class GPrimitive : UserControl
     {
+        // Model containing data about this GPrimitive
         private GPrimitiveModel model { get; set; }
+        
+        // Transform variables
+        private TransformGroup transformGroup;
+        private MatrixTransform previousTransform;
+        private CompositeTransform compositeTransform;
+        private bool forceManipulationsToEnd;
 
         public GPrimitive()
         {
             model = new GPrimitiveModel();
             this.DataContext = model;
+            
+            this.ManipulationMode = ManipulationModes.System | ManipulationModes.TranslateX | ManipulationModes.TranslateY;
+            this.ManipulationStarting += new ManipulationStartingEventHandler(ElementManipulationStarting);
+            this.ManipulationStarted += new ManipulationStartedEventHandler(ElementManipulationStarted);
+            this.ManipulationDelta += new ManipulationDeltaEventHandler(ElementManipulationDelta);
+            this.ManipulationCompleted += new ManipulationCompletedEventHandler(ElementManipulationCompleted);
+            this.ManipulationInertiaStarting += new ManipulationInertiaStartingEventHandler(ElementManipulationInertiaStarting);
+
+            forceManipulationsToEnd = true;
+            this.RenderTransform = null;
+            InitManipulationTransforms();
+
             this.InitializeComponent();
         }
+
+        #region Manipulation Methods
+        private void InitManipulationTransforms()
+        {
+            //Initialize the transforms
+            transformGroup = new TransformGroup();
+            compositeTransform = new CompositeTransform();
+            previousTransform = new MatrixTransform() { Matrix = Matrix.Identity };
+
+            transformGroup.Children.Add(previousTransform);
+            transformGroup.Children.Add(compositeTransform);
+
+            this.RenderTransform = transformGroup;
+        }
+
+        void ElementManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        {
+            forceManipulationsToEnd = false;
+            e.Handled = true;
+        }
+
+        void ElementManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        void ElementManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        void ElementManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            if (forceManipulationsToEnd)
+            {
+                e.Complete();
+                return;
+            }
+            //Set the new transform values based on user action
+            previousTransform.Matrix = transformGroup.Value;
+            compositeTransform.TranslateX = e.Delta.Translation.X/* / scrollViewer.ZoomFactor*/;
+            compositeTransform.TranslateY = e.Delta.Translation.Y/* / scrollViewer.ZoomFactor*/;
+            e.Handled = true;
+        }
+
+        void ElementManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+        #endregion
 
         public int GateType
         {

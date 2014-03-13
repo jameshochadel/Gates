@@ -242,6 +242,14 @@ namespace Gates.GElements
         /// </summary>
         public void UpdateGateType(int gateType)
         {
+            if (GateType == 5 && gateType != 5)
+            {
+
+            }
+            else if (GateType != 5 && gateType == 5)
+            {
+
+            }
             GateType = gateType;
             BitmapImage image = new BitmapImage();
             image.UriSource = new Uri(String.Format("ms-appx:/Assets/{0}.png", GateType.ToString()));

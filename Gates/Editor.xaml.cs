@@ -102,5 +102,10 @@ namespace Gates
         }
 
         #endregion
+
+        private void ToolbarPrimitiveAnd_DragLeave(object sender, DragEventArgs e)
+        {
+
+        }
     }
 }
