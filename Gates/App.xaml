@@ -15,4 +15,4 @@
             <x:String x:Key="AppName">Gates</x:String>
         </ResourceDictionary>
     </Application.Resources>
-</Application> <!--TODO: Cache background images for all GElements-->
+</Application>

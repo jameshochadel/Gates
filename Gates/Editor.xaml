@@ -48,6 +48,7 @@
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource GatesHeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" Margin="10,0,0,5"/>
             <StackPanel 
+                x:Name="EditorToolbar"
                 Background="#71aa71"
                 Grid.Column="2" 
                 Orientation="Horizontal" 
@@ -63,15 +64,16 @@
                     <Button.Flyout>
                         <MenuFlyout x:Name="CircuitCanvasZoomFlyout">
                             <MenuFlyoutItem x:Name="CircuitCanvasZoom200" Text="200%" Click="CircuitCanvasZoom200_Click" />
-                            <MenuFlyoutItem x:Name="CircuitCanvasZoom100" Text="100%"/>
-                            <MenuFlyoutItem x:Name="CircuitCanvasZoom50" Text="50%" />
+                            <MenuFlyoutItem x:Name="CircuitCanvasZoom100" Text="100%" Click="CircuitCanvasZoom100_Click"/>
+                            <MenuFlyoutItem x:Name="CircuitCanvasZoom50" Text="50%" Click="CircuitCanvasZoom50_Click" />
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>
             </StackPanel>
         </Grid>
         <Grid
-            Grid.Row="1">
+            Grid.Row="1"
+            >
             <ScrollViewer
                 x:Name="CircuitCanvasScrollViewer"
                 HorizontalScrollBarVisibility="Auto"
@@ -79,13 +81,21 @@
                 ZoomMode="Enabled"
                 MaxZoomFactor="2.0"
                 MinZoomFactor="0.5">
-                <Canvas
-                    x:Name="CircuitCanvas"
-                    Height="3000"
-                    Width="3000">
+                <Canvas x:Name="CircuitCanvas" Height="3000" Width="4000">
                     <G:GPrimitive x:Name="TestPrimitive" GateType="0" Canvas.Left="207" Canvas.Top="129" />
                 </Canvas>
             </ScrollViewer>
         </Grid>
     </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar x:Name="bottomAppBar" RequestedTheme="Dark" Closed="CommandBar_Closed">
+            <AppBarButton x:Name="CommandBarAddPrimitiveAnd" Icon="Add" Label="And Gate" Click="CommandBarAdd_Click"/>
+            <AppBarButton x:Name="CommandBarAddPrimitiveOr" Icon="Add" Label="Or Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveNand" Icon="Add" Label="Nand Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveNor" Icon="Add" Label="Nor Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveXand" Icon="Add" Label="Xor Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveInv" Icon="Add" Label="Inverter" Click="CommandBarAdd_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

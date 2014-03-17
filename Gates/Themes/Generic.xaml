@@ -3,22 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Gates.GElements">
 
-    <!--<Style TargetType="local:GPrimitive">
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Width" Value="50" />
-        <Setter Property="Height" Value="35" />
-        <Setter Property="DataContext" Value="GPrimitive" />
-        <Setter Property="IsRightTapEnabled" Value="True"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:GPrimitive">
-                    <Image Height="35" Source="Assets/gate-and.png" Width="50" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
-
     <Style TargetType="local:GContainer">
         <Setter Property="Template">
             <Setter.Value>
@@ -46,20 +30,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <!--
-    <Style TargetType="local:GPrimitive">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:GPrimitive">
-                    <Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
 
 </ResourceDictionary>

@@ -72,7 +72,7 @@
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
             </GridView.GroupStyle>
-            <Button x:Name="EditorNavButton" Content="Button" Click="EditorNavButton_Click"/>
+            <Button x:Name="EditorNavButton" Content="Go to Editor" Click="EditorNavButton_Click"/>
         </GridView>
 
         <!-- Back button and page title -->

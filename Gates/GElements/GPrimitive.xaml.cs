@@ -33,6 +33,9 @@ namespace Gates.GElements
         private CompositeTransform compositeTransform;
         private bool forceManipulationsToEnd;
 
+        /// <summary>
+        /// Create a GPrimitive with the default GateType (AND).
+        /// </summary>
         public GPrimitive()
         {
             model = new GPrimitiveModel();
@@ -52,6 +55,33 @@ namespace Gates.GElements
             InitManipulationTransforms();
         }
 
+        /// <summary>
+        /// Create a GPrimitive of a specific GateType.
+        /// </summary>
+        /// <param name="gateType">The gate type</param>
+        public GPrimitive(int gateType)
+        {
+            model = new GPrimitiveModel();
+            model.GateType = gateType;
+            this.DataContext = model;
+
+            this.InitializeComponent();
+
+            this.ManipulationMode = ManipulationModes.System | ManipulationModes.TranslateX | ManipulationModes.TranslateY;
+            this.ManipulationStarting += new ManipulationStartingEventHandler(ElementManipulationStarting);
+            this.ManipulationStarted += new ManipulationStartedEventHandler(ElementManipulationStarted);
+            this.ManipulationDelta += new ManipulationDeltaEventHandler(ElementManipulationDelta);
+            this.ManipulationCompleted += new ManipulationCompletedEventHandler(ElementManipulationCompleted);
+            this.ManipulationInertiaStarting += new ManipulationInertiaStartingEventHandler(ElementManipulationInertiaStarting);
+
+            forceManipulationsToEnd = true;
+            this.RenderTransform = null;
+            InitManipulationTransforms();
+        }
+
+        /// <summary>
+        /// Code for manipulating the GPrimitive on the application canvas.
+        /// </summary>
         #region Manipulation Methods
         private void InitManipulationTransforms()
         {
@@ -102,6 +132,10 @@ namespace Gates.GElements
         }
         #endregion
 
+        /// <summary>
+        /// The type of gate this GPrimitive represents
+        /// </summary>
+        /// <remarks>AND=0, OR=1, NAND=2, NOR=3, XAND=4, INVERT=5</remarks>
         public int GateType
         {
             get { return (int)GetValue(GateTypeProperty); }
@@ -112,11 +146,76 @@ namespace Gates.GElements
         public static readonly DependencyProperty GateTypeProperty =
             DependencyProperty.Register("GateType", typeof(int), typeof(GPrimitive), new PropertyMetadata(0, new PropertyChangedCallback(OnGateTypeChanged)));
 
+
         private static void OnGateTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             var instance = d as GPrimitive;
             if (instance != null) {
                 instance.model.UpdateGateType(instance.GateType);
             }
+        }
+
+        /// <summary>
+        /// Show the i/o clickzones on pointer enter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GPrimitive_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (GateType == 5)
+            {
+                InverterDragZonesPointerEnterAnimation.Begin();
+            }
+            else
+            {
+                DragZonesPointerEnterAnimation.Begin();
+            }
+        }
+
+        /// <summary>
+        /// Hide the i/o clickzones on pointer exit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GPrimitive_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (GateType == 5)
+            {
+                InverterDragZonesPointerLeaveAnimation.Begin();
+            }
+            else
+            {
+                DragZonesPointerLeaveAnimation.Begin();
+            }
+        }
+
+        private void GPrimitive_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (GateType == 5)
+            {
+                if (InputTop.Opacity == 0) {
+                    InverterDragZonesPointerEnterAnimation.Begin();
+                }
+                else
+                {
+                    InverterDragZonesPointerLeaveAnimation.Begin();
+                }
+            }
+            else
+            {
+                if (InputTop.Opacity == 0)
+                {
+                    DragZonesPointerEnterAnimation.Begin();
+                }
+                else
+                {
+                    DragZonesPointerLeaveAnimation.Begin();
+                }
+            }
+        }
+
+        private void GPrimitive_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            
         }
     }
 }

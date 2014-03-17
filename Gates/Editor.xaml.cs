@@ -1,4 +1,5 @@
 ﻿using Gates.Common;
+using Gates.GElements;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,8 @@ namespace Gates
 
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private GPrimitive GPrimitiveInFocus;
+        public static Editor CurrentEditor;
 
         /// <summary>
         /// This can be changed to a strongly typed view model.
@@ -51,6 +54,7 @@ namespace Gates
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
+            CurrentEditor = this;
         }
 
         /// <summary>
@@ -80,6 +84,39 @@ namespace Gates
         {
         }
 
+        /// <summary>
+        /// Reset the command bar to only include primary commands
+        /// </summary>
+        public static void CommandBarReset()
+        {
+
+        }
+
+        public static void CommandBarPrimitiveRightTap(GPrimitive sender)
+        {
+            CurrentEditor.GPrimitiveInFocus = sender;
+            if (CurrentEditor.BottomAppBar != null)
+            {
+                AppBarButton CommandBarDeletePrimitive = new AppBarButton();
+                CommandBarDeletePrimitive.Icon = new SymbolIcon(Symbol.Delete);
+                CommandBarDeletePrimitive.Label = "Delete Gate";
+                CommandBarDeletePrimitive.Click += CommandBarDeletePrimitive_Click;
+                CurrentEditor.bottomAppBar.SecondaryCommands.Insert(0, CommandBarDeletePrimitive);
+
+                CurrentEditor.BottomAppBar.IsOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// Delete the GPrimitive in focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void CommandBarDeletePrimitive_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEditor.CircuitCanvas.Children.Remove(CurrentEditor.GPrimitiveInFocus);
+        }
+
         #region NavigationHelper registration
 
         /// The methods provided in this section are simply used to allow
@@ -105,12 +142,73 @@ namespace Gates
 
         private void ToolbarPrimitiveAnd_DragLeave(object sender, DragEventArgs e)
         {
-
+            GElements.GPrimitive g = new GElements.GPrimitive(0);
+            //g.SetValue(Parent, EditorToolbar);
+            g.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            //g.RenderTransform
+            
         }
 
+        #region Canvas zoom button event handlers
         private void CircuitCanvasZoom200_Click(object sender, RoutedEventArgs e)
         {
-            //CircuitCanvasScrollViewer.ZoomFactor = 2.0;
+            CircuitCanvasScrollViewer.ChangeView(null, null, (float)2.0);
         }
+
+        private void CircuitCanvasZoom100_Click(object sender, RoutedEventArgs e)
+        {
+            CircuitCanvasScrollViewer.ChangeView(null, null, (float)1.0);
+        }
+
+        private void CircuitCanvasZoom50_Click(object sender, RoutedEventArgs e)
+        {
+            CircuitCanvasScrollViewer.ChangeView(null, null, (float)0.5);
+        }
+        #endregion
+
+        /// <summary>
+        /// Add a new GPrimitive to the canvas when a CommandBar button is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CommandBarAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AppBarButton b = sender as AppBarButton;
+            GElements.GPrimitive g = new GElements.GPrimitive(0);
+            g.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+            if (b == CommandBarAddPrimitiveAnd)
+            {
+                g.GateType = 0;
+            }
+            else if (b == CommandBarAddPrimitiveOr)
+            {
+                g.GateType = 1;
+            }
+            else if (b == CommandBarAddPrimitiveNand)
+            {
+                g.GateType = 2;
+            }
+            else if (b == CommandBarAddPrimitiveNor)
+            {
+                g.GateType = 3;
+            }
+            else if (b == CommandBarAddPrimitiveXand)
+            {
+                g.GateType = 4;
+            }
+            else if (b == CommandBarAddPrimitiveInv)
+            {
+                g.GateType = 5;
+            }
+            
+            CircuitCanvas.Children.Add(g);
+        }
+
+        private void CommandBar_Closed(object sender, object e)
+        {
+
+        }
+
     }
 }
