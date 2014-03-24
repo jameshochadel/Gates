@@ -17,33 +17,21 @@
         </TransitionCollection>
     </UserControl.Transitions>
     <!--ManipulationMode = "TranslateInertia"-->
-    <Grid Height="55" Width="70" PointerEntered="GPrimitive_PointerEntered" PointerExited="GPrimitive_PointerExited" Tapped="GPrimitive_Tapped" RightTapped="GPrimitive_RightTapped" >
+    <Grid Height="55" Width="70" PointerEntered="GPrimitive_OnPointerEntered" PointerExited="GPrimitive_OnPointerExited" Tapped="GPrimitive_OnTapped" RightTapped="GPrimitive_RightTapped" >
         <Grid.Resources>
             <Storyboard x:Name="DragZonesPointerEnterAnimation">
-                <DoubleAnimation
-                    Storyboard.TargetName="InputTop" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="1"></DoubleAnimation>
-                <DoubleAnimation
-                    Storyboard.TargetName="InputBottom" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="1"></DoubleAnimation>
                 <DoubleAnimation
                     Storyboard.TargetName="Output" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="1"></DoubleAnimation>
             </Storyboard>
             <Storyboard x:Name="InverterDragZonesPointerEnterAnimation">
                 <DoubleAnimation
-                    Storyboard.TargetName="InputMiddle" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="1"></DoubleAnimation>
-                <DoubleAnimation
                     Storyboard.TargetName="Output" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="1"></DoubleAnimation>
             </Storyboard>
             <Storyboard x:Name="DragZonesPointerLeaveAnimation">
                 <DoubleAnimation
-                    Storyboard.TargetName="InputTop" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="0"></DoubleAnimation>
-                <DoubleAnimation
-                    Storyboard.TargetName="InputBottom" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="0"></DoubleAnimation>
-                <DoubleAnimation
                     Storyboard.TargetName="Output" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="0"></DoubleAnimation>
             </Storyboard>
             <Storyboard x:Name="InverterDragZonesPointerLeaveAnimation">
-                <DoubleAnimation
-                    Storyboard.TargetName="InputMiddle" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="0"></DoubleAnimation>
                 <DoubleAnimation
                     Storyboard.TargetName="Output" Storyboard.TargetProperty="Opacity" Duration="0:0:.1" To="0"></DoubleAnimation>
             </Storyboard>
@@ -53,6 +41,5 @@
         </Polygon>
         <Polygon x:Name="InputMiddle" Points="1.5,1.5 1.5,11.5 6.5,11.5 11.5,6.5 6.5,1.5" HorizontalAlignment="Left" VerticalAlignment="Center" Stroke="#007500" Fill="#c3edc3" StrokeThickness="3" Opacity="0"/>
         <Polygon x:Name="InputBottom" Points="1.5,1.5 1.5,13.5 6.5,13.5 11.5,6.5 6.5,1.5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,12" Stroke="#007500" Fill="#c3edc3" StrokeThickness="3" Opacity="0"/>
-        <Polygon x:Name="Output" Points="1.5,1.5 1.5,11.5 6.5,11.5 11.5,6.5 6.5,1.5" HorizontalAlignment="Right" VerticalAlignment="Center" Stroke="#007500" Fill="#c3edc3" StrokeThickness="3" Opacity="0"/>
     </Grid>
 </UserControl>

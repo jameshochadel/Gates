@@ -20,6 +20,13 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Gates.GElements
 {
+    /// <summary>
+    /// Simulate a basic logic gate.
+    /// </summary>
+    /// <remarks>
+    /// When instantiating a new GPrimitive on the Editor canvas, be sure to subscribe its event 
+    /// handlers to the proper events, or the GPrimitive won't do much.
+    /// </remarks>
     public sealed partial class GPrimitive : UserControl
     {
         // Model containing data about this GPrimitive
@@ -159,59 +166,47 @@ namespace Gates.GElements
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GPrimitive_PointerEntered(object sender, PointerRoutedEventArgs e)
+        private void GPrimitive_OnPointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (GateType == 5)
+            // raise event that Editor.CurrentEditor is subscribed to so it may respond properly
+            EventHandler<PointerRoutedEventArgs> handler = GPrimitive_PointerEntered;
+
+            if (handler != null)
             {
-                InverterDragZonesPointerEnterAnimation.Begin();
-            }
-            else
-            {
-                DragZonesPointerEnterAnimation.Begin();
+                handler(this, e);
             }
         }
+
+        public event EventHandler<PointerRoutedEventArgs> GPrimitive_PointerEntered;
 
         /// <summary>
         /// Hide the i/o clickzones on pointer exit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GPrimitive_PointerExited(object sender, PointerRoutedEventArgs e)
+        private void GPrimitive_OnPointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if (GateType == 5)
+            EventHandler<PointerRoutedEventArgs> handler = GPrimitive_PointerExited;
+
+            if (handler != null)
             {
-                InverterDragZonesPointerLeaveAnimation.Begin();
-            }
-            else
-            {
-                DragZonesPointerLeaveAnimation.Begin();
+                handler(this, e);
             }
         }
 
-        private void GPrimitive_Tapped(object sender, TappedRoutedEventArgs e)
+        public event EventHandler<PointerRoutedEventArgs> GPrimitive_PointerExited;
+
+        private void GPrimitive_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (GateType == 5)
+            EventHandler<TappedRoutedEventArgs> handler = GPrimitive_Tapped;
+
+            if (handler != null)
             {
-                if (InputTop.Opacity == 0) {
-                    InverterDragZonesPointerEnterAnimation.Begin();
-                }
-                else
-                {
-                    InverterDragZonesPointerLeaveAnimation.Begin();
-                }
-            }
-            else
-            {
-                if (InputTop.Opacity == 0)
-                {
-                    DragZonesPointerEnterAnimation.Begin();
-                }
-                else
-                {
-                    DragZonesPointerLeaveAnimation.Begin();
-                }
+                handler(this, e);
             }
         }
+
+        public event EventHandler<TappedRoutedEventArgs> GPrimitive_Tapped;
 
         private void GPrimitive_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {

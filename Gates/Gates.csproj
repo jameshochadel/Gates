@@ -122,6 +122,13 @@
       <DependentUpon>GPrimitive.xaml</DependentUpon>
     </Compile>
     <Compile Include="GElements\GPrimitiveModel.cs" />
+    <Compile Include="GElements\GWire.xaml.cs">
+      <DependentUpon>GWire.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GElements\GWireHandle.xaml.cs">
+      <DependentUpon>GWireHandle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GElements\GWireModel.cs" />
     <Compile Include="Helper Classes\InputValuesContainer.cs" />
     <Compile Include="Helper Classes\OutputValuesContainer.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -147,6 +154,14 @@
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Common\ReadMe.txt" />
+    <Page Include="GElements\GWire.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GElements\GWireHandle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GElements\GPrimitive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

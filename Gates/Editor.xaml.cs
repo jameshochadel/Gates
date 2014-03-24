@@ -176,6 +176,7 @@ namespace Gates
             AppBarButton b = sender as AppBarButton;
             GElements.GPrimitive g = new GElements.GPrimitive(0);
             g.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            g.GPrimitive_PointerEntered += g_GPrimitive_PointerEntered;
 
             if (b == CommandBarAddPrimitiveAnd)
             {
@@ -210,5 +211,29 @@ namespace Gates
 
         }
 
+        /// <summary>
+        /// Show the i/o clickzones on pointer enter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void g_GPrimitive_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            GPrimitive g = sender as GPrimitive;
+            if (g.GateType == 5)
+            {
+                GWireHandle outputHandle = new GWireHandle();
+                
+            }
+            else
+            {
+                //DragZonesPointerEnterAnimation.Begin();
+            }
+        }
+
+        private void g_GPrimitive_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            GPrimitive g = sender as GPrimitive;
+            // toggle visibility of GWireHandle
+        }
     }
 }
