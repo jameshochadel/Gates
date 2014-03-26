@@ -17,7 +17,7 @@
         </TransitionCollection>
     </UserControl.Transitions>
     <!--ManipulationMode = "TranslateInertia"-->
-    <Grid Height="55" Width="70" PointerEntered="GPrimitive_OnPointerEntered" PointerExited="GPrimitive_OnPointerExited" Tapped="GPrimitive_OnTapped" RightTapped="GPrimitive_RightTapped" >
+    <Grid Height="55" Width="70" PointerEntered="GPrimitive_OnPointerEntered" PointerExited="GPrimitive_OnPointerExited" Tapped="GPrimitive_OnTapped" RightTapped="GPrimitive_OnRightTapped" >
         <Grid.Resources>
             <Storyboard x:Name="DragZonesPointerEnterAnimation">
                 <DoubleAnimation

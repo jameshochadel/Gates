@@ -208,9 +208,16 @@ namespace Gates.GElements
 
         public event EventHandler<TappedRoutedEventArgs> GPrimitive_Tapped;
 
-        private void GPrimitive_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        private void GPrimitive_OnRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            
+            EventHandler<RightTappedRoutedEventArgs> handler = GPrimitive_RightTapped;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
+
+        public event EventHandler<RightTappedRoutedEventArgs> GPrimitive_RightTapped;
     }
 }

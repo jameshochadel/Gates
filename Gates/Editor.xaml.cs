@@ -24,11 +24,9 @@ namespace Gates
     /// </summary>
     public sealed partial class Editor : Page
     {
-
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private GPrimitive GPrimitiveInFocus;
-        public static Editor CurrentEditor;
+        private List<GPrimitive> GPrimitivesInFocus = new List<GPrimitive>();
 
         /// <summary>
         /// This can be changed to a strongly typed view model.
@@ -54,7 +52,7 @@ namespace Gates
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
-            CurrentEditor = this;
+            this.BottomAppBar = bottomAppBar;
         }
 
         /// <summary>
@@ -85,36 +83,17 @@ namespace Gates
         }
 
         /// <summary>
-        /// Reset the command bar to only include primary commands
-        /// </summary>
-        public static void CommandBarReset()
-        {
-
-        }
-
-        public static void CommandBarPrimitiveRightTap(GPrimitive sender)
-        {
-            CurrentEditor.GPrimitiveInFocus = sender;
-            if (CurrentEditor.BottomAppBar != null)
-            {
-                AppBarButton CommandBarDeletePrimitive = new AppBarButton();
-                CommandBarDeletePrimitive.Icon = new SymbolIcon(Symbol.Delete);
-                CommandBarDeletePrimitive.Label = "Delete Gate";
-                CommandBarDeletePrimitive.Click += CommandBarDeletePrimitive_Click;
-                CurrentEditor.bottomAppBar.SecondaryCommands.Insert(0, CommandBarDeletePrimitive);
-
-                CurrentEditor.BottomAppBar.IsOpen = true;
-            }
-        }
-
-        /// <summary>
         /// Delete the GPrimitive in focus
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void CommandBarDeletePrimitive_Click(object sender, RoutedEventArgs e)
+        private void CommandBarDeletePrimitive_Click(object sender, RoutedEventArgs e)
         {
-            CurrentEditor.CircuitCanvas.Children.Remove(CurrentEditor.GPrimitiveInFocus);
+            foreach (GPrimitive element in GPrimitivesInFocus)
+            {
+                CircuitCanvas.Children.Remove(element); // does this get garbage collected..?
+            }
+            GPrimitivesInFocus.Clear();
         }
 
         #region NavigationHelper registration
@@ -175,8 +154,11 @@ namespace Gates
         {
             AppBarButton b = sender as AppBarButton;
             GElements.GPrimitive g = new GElements.GPrimitive(0);
-            g.Visibility = Windows.UI.Xaml.Visibility.Visible;
             g.GPrimitive_PointerEntered += g_GPrimitive_PointerEntered;
+            g.GPrimitive_PointerExited += g_GPrimitive_PointerExited;
+            g.GPrimitive_Tapped += g_GPrimitive_Tapped;
+            g.GPrimitive_RightTapped += g_GPrimitive_RightTapped;
+            g.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
             if (b == CommandBarAddPrimitiveAnd)
             {
@@ -206,11 +188,19 @@ namespace Gates
             CircuitCanvas.Children.Add(g);
         }
 
+        /// <summary>
+        /// Clear the command bar of any contextual controls when it is closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBar_Closed(object sender, object e)
         {
-
+            if (bottomAppBar.SecondaryCommands.Count != 0) {
+                bottomAppBar.SecondaryCommands.Clear();
+            }
         }
 
+        #region GPrimitive Event Handlers
         /// <summary>
         /// Show the i/o clickzones on pointer enter
         /// </summary>
@@ -219,21 +209,73 @@ namespace Gates
         private void g_GPrimitive_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             GPrimitive g = sender as GPrimitive;
+            if (this.BottomAppBar != null)
+            {
+                /*if (true)
+                { //Replace condition with "If CommandBar does not contain a button named CommandBarDeletePrimitive"; also need to name it that
+                    AppBarButton CommandBarDeletePrimitive = new AppBarButton();
+                    CommandBarDeletePrimitive.Icon = new SymbolIcon(Symbol.Delete);
+                    CommandBarDeletePrimitive.Label = "Delete Gate";
+                    CommandBarDeletePrimitive.Click += CommandBarDeletePrimitive_Click; // need this click event to apply to sender parameter of this method
+                    bottomAppBar.SecondaryCommands.Insert(0, CommandBarDeletePrimitive);
+
+                    bottomAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+                    CommandBar c = this.BottomAppBar as CommandBar;
+                    //this.BottomAppBar.IsOpen = true;
+                    c.IsOpen = true;
+                }
+                GPrimitivesInFocus.Add(g);*/
+            }
+            /*GPrimitive g = sender as GPrimitive;
             if (g.GateType == 5)
             {
                 GWireHandle outputHandle = new GWireHandle();
-                
             }
             else
             {
                 //DragZonesPointerEnterAnimation.Begin();
-            }
+            }*/
+        }
+
+        private void g_GPrimitive_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            
         }
 
         private void g_GPrimitive_Tapped(object sender, TappedRoutedEventArgs e)
         {
             GPrimitive g = sender as GPrimitive;
             // toggle visibility of GWireHandle
+        }
+
+        private void g_GPrimitive_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            GPrimitive g = sender as GPrimitive;
+            if (this.BottomAppBar != null)
+            {
+                if(true) { //Replace condition with "If CommandBar does not contain a button named CommandBarDeletePrimitive"; also need to name it that
+                    AppBarButton CommandBarDeletePrimitive = new AppBarButton();
+                    CommandBarDeletePrimitive.Icon = new SymbolIcon(Symbol.Delete);
+                    CommandBarDeletePrimitive.Label = "Delete Gate";
+                    CommandBarDeletePrimitive.Click += CommandBarDeletePrimitive_Click; // need this click event to apply to sender parameter of this method
+                    bottomAppBar.SecondaryCommands.Insert(0, CommandBarDeletePrimitive);
+
+                    bottomAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+                    CommandBar c = this.BottomAppBar as CommandBar;
+                    //this.BottomAppBar.IsOpen = true;
+                    c.IsOpen = true;
+                }
+                GPrimitivesInFocus.Add(g);
+            }
+        }
+
+        #endregion
+
+        public class DeleteGPrimitiveEventArgs : RoutedEventArgs
+        {
+            public GPrimitive GPrimitiveInFocus { get; set; }
         }
     }
 }

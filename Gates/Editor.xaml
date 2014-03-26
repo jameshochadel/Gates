@@ -11,10 +11,17 @@
     xmlns:G="using:Gates.GElements"
     mc:Ignorable="d">
 
-    <Page.Resources>
-
-    </Page.Resources>
-
+    <Page.BottomAppBar>
+        <CommandBar x:Name="bottomAppBar" RequestedTheme="Dark" Closed="CommandBar_Closed">
+            <AppBarButton x:Name="CommandBarAddPrimitiveAnd" Icon="Add" Label="And Gate" Click="CommandBarAdd_Click"/>
+            <AppBarButton x:Name="CommandBarAddPrimitiveOr" Icon="Add" Label="Or Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveNand" Icon="Add" Label="Nand Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveNor" Icon="Add" Label="Nor Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveXand" Icon="Add" Label="Xor Gate" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddPrimitiveInv" Icon="Add" Label="Inverter" Click="CommandBarAdd_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    
     <!--
         This grid acts as a root panel for the page that defines two rows:
         * Row 0 contains the back button and page title
@@ -87,15 +94,4 @@
             </ScrollViewer>
         </Grid>
     </Grid>
-    
-    <Page.BottomAppBar>
-        <CommandBar x:Name="bottomAppBar" RequestedTheme="Dark" Closed="CommandBar_Closed">
-            <AppBarButton x:Name="CommandBarAddPrimitiveAnd" Icon="Add" Label="And Gate" Click="CommandBarAdd_Click"/>
-            <AppBarButton x:Name="CommandBarAddPrimitiveOr" Icon="Add" Label="Or Gate" Click="CommandBarAdd_Click" />
-            <AppBarButton x:Name="CommandBarAddPrimitiveNand" Icon="Add" Label="Nand Gate" Click="CommandBarAdd_Click" />
-            <AppBarButton x:Name="CommandBarAddPrimitiveNor" Icon="Add" Label="Nor Gate" Click="CommandBarAdd_Click" />
-            <AppBarButton x:Name="CommandBarAddPrimitiveXand" Icon="Add" Label="Xor Gate" Click="CommandBarAdd_Click" />
-            <AppBarButton x:Name="CommandBarAddPrimitiveInv" Icon="Add" Label="Inverter" Click="CommandBarAdd_Click" />
-        </CommandBar>
-    </Page.BottomAppBar>
 </Page>
