@@ -26,6 +26,7 @@ namespace Gates.GElements
         private MatrixTransform previousTransform;
         private CompositeTransform compositeTransform;
         private bool forceManipulationsToEnd;
+        public GPrimitive ParentPrimitive;
 
         public GWireHandle()
         {

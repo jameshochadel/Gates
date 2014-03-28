@@ -209,38 +209,28 @@ namespace Gates
         private void g_GPrimitive_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             GPrimitive g = sender as GPrimitive;
-            if (this.BottomAppBar != null)
-            {
-                /*if (true)
-                { //Replace condition with "If CommandBar does not contain a button named CommandBarDeletePrimitive"; also need to name it that
-                    AppBarButton CommandBarDeletePrimitive = new AppBarButton();
-                    CommandBarDeletePrimitive.Icon = new SymbolIcon(Symbol.Delete);
-                    CommandBarDeletePrimitive.Label = "Delete Gate";
-                    CommandBarDeletePrimitive.Click += CommandBarDeletePrimitive_Click; // need this click event to apply to sender parameter of this method
-                    bottomAppBar.SecondaryCommands.Insert(0, CommandBarDeletePrimitive);
+            GWireHandle outputHandle = new GWireHandle();
+            outputHandle.ParentPrimitive = g;
+            g.ChildWireHandle = outputHandle;
 
-                    bottomAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
-
-                    CommandBar c = this.BottomAppBar as CommandBar;
-                    //this.BottomAppBar.IsOpen = true;
-                    c.IsOpen = true;
-                }
-                GPrimitivesInFocus.Add(g);*/
-            }
-            /*GPrimitive g = sender as GPrimitive;
             if (g.GateType == 5)
             {
-                GWireHandle outputHandle = new GWireHandle();
+                Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
+                Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
             }
             else
             {
-                //DragZonesPointerEnterAnimation.Begin();
-            }*/
+                CircuitCanvas.Children.Add(outputHandle);
+                Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
+                Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
+            }
         }
 
         private void g_GPrimitive_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            
+            GPrimitive g = sender as GPrimitive;
+            //if it hasn't been attached to something, then remove it. If it has, return.
+            CircuitCanvas.Children.Remove(g.ChildWireHandle);
         }
 
         private void g_GPrimitive_Tapped(object sender, TappedRoutedEventArgs e)
@@ -261,11 +251,11 @@ namespace Gates
                     CommandBarDeletePrimitive.Click += CommandBarDeletePrimitive_Click; // need this click event to apply to sender parameter of this method
                     bottomAppBar.SecondaryCommands.Insert(0, CommandBarDeletePrimitive);
 
-                    bottomAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    //bottomAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
-                    CommandBar c = this.BottomAppBar as CommandBar;
+                    //CommandBar c = this.BottomAppBar as CommandBar;
                     //this.BottomAppBar.IsOpen = true;
-                    c.IsOpen = true;
+                    //c.IsOpen = true;
                 }
                 GPrimitivesInFocus.Add(g);
             }

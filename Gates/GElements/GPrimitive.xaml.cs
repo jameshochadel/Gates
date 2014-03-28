@@ -31,6 +31,7 @@ namespace Gates.GElements
     {
         // Model containing data about this GPrimitive
         private GPrimitiveModel model { get; set; }
+        public GWireHandle ChildWireHandle;
         
         // Transform variables
         // All transform code adapted from Windows 8.1 SDK "AdvancedManipulations" demo.
