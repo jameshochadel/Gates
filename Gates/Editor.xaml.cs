@@ -215,14 +215,17 @@ namespace Gates
 
             if (g.GateType == 5)
             {
-                Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
-                Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
+                CircuitCanvas.Children.Add(outputHandle);
+                outputHandle.SetValue(Canvas.LeftProperty, (double)g.GetValue(Canvas.LeftProperty) + 55d);
+                outputHandle.SetValue(Canvas.TopProperty, (double)g.GetValue(Canvas.TopProperty) + 15d);
             }
             else
             {
                 CircuitCanvas.Children.Add(outputHandle);
-                Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
-                Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
+                outputHandle.SetValue(Canvas.LeftProperty, (double)g.GetValue(Canvas.LeftProperty) + 55d);
+                outputHandle.SetValue(Canvas.TopProperty, (double)g.GetValue(Canvas.TopProperty) + 15d);
+                //Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
+                //Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
             }
         }
 

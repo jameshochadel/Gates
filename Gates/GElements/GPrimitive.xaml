@@ -9,7 +9,7 @@
     d:DesignHeight="55"
     d:DesignWidth="70"
     Height="55"
-    Width="70"
+    Width="70" AllowDrop="True"
     >
     <UserControl.Transitions>
         <TransitionCollection>

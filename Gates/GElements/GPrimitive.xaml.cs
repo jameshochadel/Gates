@@ -136,7 +136,9 @@ namespace Gates.GElements
 
         void ElementManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
-            e.Handled = true;
+            e.Handled = true; //TODO: Modify the Canvas.Left/TopProperty to match the transform values
+
+            // Fire GPrimitiveMoved event that lets associated GWires update their locations
         }
         #endregion
 
@@ -162,6 +164,7 @@ namespace Gates.GElements
             }
         }
 
+        #region Non-drag user interaction event handlers
         /// <summary>
         /// Show the i/o clickzones on pointer enter
         /// </summary>
@@ -220,5 +223,6 @@ namespace Gates.GElements
         }
 
         public event EventHandler<RightTappedRoutedEventArgs> GPrimitive_RightTapped;
+        #endregion
     }
 }

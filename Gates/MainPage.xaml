@@ -72,7 +72,8 @@
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
             </GridView.GroupStyle>
-            <Button x:Name="EditorNavButton" Content="Go to Editor" Click="EditorNavButton_Click"/>
+            <TextBlock>Eventually, this page will contain a list of recent circuits, a button to create new circuits, and a selection of tutorials.</TextBlock>
+            <Button x:Name="EditorNavButton" Content="Go to Editor" Click="EditorNavButton_Click" HorizontalAlignment="Left"/>
         </GridView>
 
         <!-- Back button and page title -->
