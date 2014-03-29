@@ -19,6 +19,7 @@
             <AppBarButton x:Name="CommandBarAddPrimitiveNor" Icon="Add" Label="Nor Gate" Click="CommandBarAdd_Click" />
             <AppBarButton x:Name="CommandBarAddPrimitiveXand" Icon="Add" Label="Xor Gate" Click="CommandBarAdd_Click" />
             <AppBarButton x:Name="CommandBarAddPrimitiveInv" Icon="Add" Label="Inverter" Click="CommandBarAdd_Click" />
+            <AppBarButton x:Name="CommandBarAddStaticInput" Icon="Add" Label="Static Input" Click="CommandBarAddStaticInput_Click" />
         </CommandBar>
     </Page.BottomAppBar>
     

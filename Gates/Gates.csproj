@@ -122,6 +122,9 @@
       <DependentUpon>GPrimitive.xaml</DependentUpon>
     </Compile>
     <Compile Include="GElements\GPrimitiveModel.cs" />
+    <Compile Include="GElements\GStaticInput.xaml.cs">
+      <DependentUpon>GStaticInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GElements\GWire.xaml.cs">
       <DependentUpon>GWire.xaml</DependentUpon>
     </Compile>
@@ -154,6 +157,10 @@
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Common\ReadMe.txt" />
+    <Page Include="GElements\GStaticInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GElements\GWire.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

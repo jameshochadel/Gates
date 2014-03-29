@@ -46,7 +46,6 @@ namespace Gates
             get { return this.navigationHelper; }
         }
 
-
         public Editor()
         {
             this.InitializeComponent();
@@ -114,19 +113,7 @@ namespace Gates
         {
         }
 
-        /// <summary>
-        /// Delete the GPrimitive in focus
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CommandBarDeletePrimitive_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (GPrimitive element in GPrimitivesInFocus)
-            {
-                CircuitCanvas.Children.Remove(element); // does this get garbage collected..?
-            }
-            GPrimitivesInFocus.Clear();
-        }
+
 
         #region NavigationHelper registration
 
@@ -178,6 +165,42 @@ namespace Gates
         #endregion
 
         /// <summary>
+        /// Round the position to the nearest grid coords
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private double RoundToGridLines(double input)
+        {
+            double output;
+
+            if (input % 20 >= 10)
+            {
+                output = input + (20 - (input % 20)) - 10;
+            }
+            else
+            {
+                output = input - (input % 20) - 10;
+            }
+
+            return output;
+        }
+
+        #region Command Bar Event Handlers
+        /// <summary>
+        /// Delete the GPrimitive in focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CommandBarDeletePrimitive_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (GPrimitive element in GPrimitivesInFocus)
+            {
+                CircuitCanvas.Children.Remove(element); // does this get garbage collected..?
+            }
+            GPrimitivesInFocus.Clear();
+        }
+
+        /// <summary>
         /// Add a new GPrimitive to the canvas when a CommandBar button is clicked.
         /// </summary>
         /// <param name="sender"></param>
@@ -190,7 +213,7 @@ namespace Gates
             g.GPrimitive_PointerExited += g_GPrimitive_PointerExited;
             g.GPrimitive_Tapped += g_GPrimitive_Tapped;
             g.GPrimitive_RightTapped += g_GPrimitive_RightTapped;
-            g.ManipulationDelta +=g_ManipulationDelta;
+            g.ManipulationDelta += g_ManipulationDelta;
             g.ManipulationCompleted += g_ManipulationCompleted;
             g.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
@@ -218,54 +241,16 @@ namespace Gates
             {
                 g.GateType = 5;
             }
-            
+
             CircuitCanvas.Children.Add(g);
         }
 
-        /// <summary>
-        /// Snap to the closest grid lines when manipulation ends
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void g_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        private void CommandBarAddStaticInput_Click(object sender, RoutedEventArgs e)
         {
-            GPrimitive g = sender as GPrimitive;
-
-            Canvas.SetLeft(g, GridRound(Canvas.GetLeft(g)));
-            Canvas.SetTop(g, GridRound(Canvas.GetTop(g)));
-
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// Round the position to the nearest grid coords
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        private double GridRound(double input)
-        {
-            double output;
-
-            if (input % 20 >= 10)
-            {
-                output = input + (20 - (input % 20)) - 10;
-            }
-            else
-            {
-                output = input - (input % 20) - 10;
-            }
-
-            return output;
-        }
-
-        private void g_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            GPrimitive g = sender as GPrimitive;
-
-            Canvas.SetLeft(g, (Canvas.GetLeft(g) + e.Delta.Translation.X));
-            Canvas.SetTop(g, (Canvas.GetTop(g) + e.Delta.Translation.Y));
-
-            e.Handled = true;
+            GStaticInput g = new GStaticInput();
+            g.ManipulationDelta += s_ManipulationDelta;
+            g.ManipulationCompleted += s_ManipulationCompleted;
+            CircuitCanvas.Children.Add(g);
         }
 
         /// <summary>
@@ -279,8 +264,67 @@ namespace Gates
                 bottomAppBar.SecondaryCommands.Clear();
             }
         }
+        #endregion
+
+
+        #region GStaticInput Event Handlers
+        private void s_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            GStaticInput g = sender as GStaticInput;
+
+            Canvas.SetLeft(g, (Canvas.GetLeft(g) + e.Delta.Translation.X));
+            Canvas.SetTop(g, (Canvas.GetTop(g) + e.Delta.Translation.Y));
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Snap to the closest grid lines when manipulation ends
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void s_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            GStaticInput g = sender as GStaticInput;
+
+            Canvas.SetLeft(g, RoundToGridLines(Canvas.GetLeft(g)));
+            Canvas.SetTop(g, RoundToGridLines(Canvas.GetTop(g)));
+
+            e.Handled = true;
+        }
+        #endregion
 
         #region GPrimitive Event Handlers
+        /// <summary>
+        /// Alter primitive location when cursor moves
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void g_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            GPrimitive g = sender as GPrimitive;
+
+            Canvas.SetLeft(g, (Canvas.GetLeft(g) + e.Delta.Translation.X));
+            Canvas.SetTop(g, (Canvas.GetTop(g) + e.Delta.Translation.Y));
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Snap to the closest grid lines when manipulation ends
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void g_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            GPrimitive g = sender as GPrimitive;
+
+            Canvas.SetLeft(g, RoundToGridLines(Canvas.GetLeft(g)));
+            Canvas.SetTop(g, RoundToGridLines(Canvas.GetTop(g)));
+
+            e.Handled = true;
+        }
+
         /// <summary>
         /// Show the i/o clickzones on pointer enter
         /// </summary>
@@ -290,22 +334,25 @@ namespace Gates
         {
             GPrimitive g = sender as GPrimitive;
             GWireHandle outputHandle = new GWireHandle();
+            outputHandle.PointerEntered += outputHandle_PointerEntered;
+            outputHandle.PointerExited += outputHandle_PointerExited;
+            outputHandle.ManipulationStarted += outputHandle_ManipulationStarted;
+            outputHandle.ManipulationDelta += outputHandle_ManipulationDelta;
+            outputHandle.ManipulationCompleted += outputHandle_ManipulationCompleted;
             outputHandle.ParentPrimitive = g;
             g.ChildWireHandle = outputHandle;
 
             if (g.GateType == 5)
             {
                 CircuitCanvas.Children.Add(outputHandle);
-                outputHandle.SetValue(Canvas.LeftProperty, (double)g.GetValue(Canvas.LeftProperty) + 55d);
-                outputHandle.SetValue(Canvas.TopProperty, (double)g.GetValue(Canvas.TopProperty) + 15d);
+                Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
+                Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
             }
             else
             {
                 CircuitCanvas.Children.Add(outputHandle);
-                outputHandle.SetValue(Canvas.LeftProperty, (double)g.GetValue(Canvas.LeftProperty) + 55d);
-                outputHandle.SetValue(Canvas.TopProperty, (double)g.GetValue(Canvas.TopProperty) + 15d);
-                //Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
-                //Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
+                Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
+                Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
             }
         }
 
@@ -314,12 +361,36 @@ namespace Gates
             GPrimitive g = sender as GPrimitive;
             //if it hasn't been attached to something, then remove it. If it has, return.
             CircuitCanvas.Children.Remove(g.ChildWireHandle);
+            g.ChildWireHandle = null;
         }
 
         private void g_GPrimitive_Tapped(object sender, TappedRoutedEventArgs e)
         {
             GPrimitive g = sender as GPrimitive;
-            // toggle visibility of GWireHandle
+            if (g.ChildWireHandle != null)
+            {
+                CircuitCanvas.Children.Remove(g.ChildWireHandle);
+                g.ChildWireHandle = null;
+            }
+            else
+            {
+                GWireHandle outputHandle = new GWireHandle();
+                outputHandle.ParentPrimitive = g;
+                g.ChildWireHandle = outputHandle;
+
+                if (g.GateType == 5)
+                {
+                    CircuitCanvas.Children.Add(outputHandle);
+                    Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
+                    Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
+                }
+                else
+                {
+                    CircuitCanvas.Children.Add(outputHandle);
+                    Canvas.SetLeft(outputHandle, Canvas.GetLeft(g) + 55);
+                    Canvas.SetTop(outputHandle, Canvas.GetTop(g) + 15);
+                }
+            }
         }
 
         private void g_GPrimitive_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -344,6 +415,34 @@ namespace Gates
             }
         }
 
+        #endregion
+
+        #region GWireHandle Event Handlers
+
+        void outputHandle_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void outputHandle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void outputHandle_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void outputHandle_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void outputHandle_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         public class DeleteGPrimitiveEventArgs : RoutedEventArgs

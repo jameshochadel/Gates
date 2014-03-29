@@ -22,10 +22,7 @@ namespace Gates.GElements
         // Transform variables
         // All transform code adapted from Windows 8.1 SDK "AdvancedManipulations" demo.
         // Potential manipulation code replacement: http://msdn.microsoft.com/en-us/library/windows/apps/hh465387.aspx
-        private TransformGroup transformGroup;
-        private MatrixTransform previousTransform;
-        private CompositeTransform compositeTransform;
-        private bool forceManipulationsToEnd;
+        
         public GPrimitive ParentPrimitive;
 
         public GWireHandle()
@@ -37,9 +34,7 @@ namespace Gates.GElements
             this.ManipulationStarted += new ManipulationStartedEventHandler(ElementManipulationStarted);
             this.ManipulationDelta += new ManipulationDeltaEventHandler(ElementManipulationDelta);
             this.ManipulationCompleted += new ManipulationCompletedEventHandler(ElementManipulationCompleted);
-            this.ManipulationInertiaStarting += new ManipulationInertiaStartingEventHandler(ElementManipulationInertiaStarting);
 
-            forceManipulationsToEnd = true;
             this.RenderTransform = null;
             InitManipulationTransforms();
         }
@@ -50,50 +45,27 @@ namespace Gates.GElements
         #region Manipulation Methods
         private void InitManipulationTransforms()
         {
-            //Initialize the transforms
-            transformGroup = new TransformGroup();
-            compositeTransform = new CompositeTransform();
-            previousTransform = new MatrixTransform() { Matrix = Matrix.Identity };
 
-            transformGroup.Children.Add(previousTransform);
-            transformGroup.Children.Add(compositeTransform);
-
-            this.RenderTransform = transformGroup;
         }
 
         void ElementManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
-            forceManipulationsToEnd = false;
-            e.Handled = true;
+            
         }
 
         void ElementManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
-            e.Handled = true;
-        }
-
-        void ElementManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
-        {
-            e.Handled = true;
+            
         }
 
         void ElementManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            if (forceManipulationsToEnd)
-            {
-                e.Complete();
-                return;
-            }
-            //Set the new transform values based on user action
-            previousTransform.Matrix = transformGroup.Value;
-            compositeTransform.TranslateX = e.Delta.Translation.X /*/ Editor.CircuitCanvasScrollViewer.ZoomFactor*/;
-            compositeTransform.TranslateY = e.Delta.Translation.Y /*/ scrollViewer.ZoomFactor*/;
-            e.Handled = true;
+            
         }
 
         void ElementManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
-            e.Handled = true;
+
         }
         #endregion
     }
