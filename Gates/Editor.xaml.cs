@@ -55,7 +55,7 @@ namespace Gates
             this.navigationHelper.SaveState += navigationHelper_SaveState;
             this.BottomAppBar = bottomAppBar;
 
-            // Add grid lines to the canvas
+            // Add horizontal grid lines to the canvas
             for (double x = 1; x < CircuitCanvas.Height; x += 20)
             {
                 CircuitCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Line()
@@ -69,6 +69,7 @@ namespace Gates
                 });
             }
 
+            // Add vertical grid lines to the canvas
             for (double x = 1; x < CircuitCanvas.Width; x += 20)
             {
                 CircuitCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Line()
@@ -81,7 +82,6 @@ namespace Gates
                     StrokeThickness = .50
                 });
             }
-
 
             GWire TestWire = new GWire(10,10,50,50);
             CircuitCanvas.Children.Add(TestWire);
@@ -190,6 +190,8 @@ namespace Gates
             g.GPrimitive_PointerExited += g_GPrimitive_PointerExited;
             g.GPrimitive_Tapped += g_GPrimitive_Tapped;
             g.GPrimitive_RightTapped += g_GPrimitive_RightTapped;
+            g.ManipulationDelta +=g_ManipulationDelta;
+            g.ManipulationCompleted += g_ManipulationCompleted;
             g.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
             if (b == CommandBarAddPrimitiveAnd)
@@ -218,6 +220,52 @@ namespace Gates
             }
             
             CircuitCanvas.Children.Add(g);
+        }
+
+        /// <summary>
+        /// Snap to the closest grid lines when manipulation ends
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void g_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            GPrimitive g = sender as GPrimitive;
+
+            Canvas.SetLeft(g, GridRound(Canvas.GetLeft(g)));
+            Canvas.SetTop(g, GridRound(Canvas.GetTop(g)));
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Round the position to the nearest grid coords
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private double GridRound(double input)
+        {
+            double output;
+
+            if (input % 20 >= 10)
+            {
+                output = input + (20 - (input % 20)) - 10;
+            }
+            else
+            {
+                output = input - (input % 20) - 10;
+            }
+
+            return output;
+        }
+
+        private void g_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            GPrimitive g = sender as GPrimitive;
+
+            Canvas.SetLeft(g, (Canvas.GetLeft(g) + e.Delta.Translation.X));
+            Canvas.SetTop(g, (Canvas.GetTop(g) + e.Delta.Translation.Y));
+
+            e.Handled = true;
         }
 
         /// <summary>

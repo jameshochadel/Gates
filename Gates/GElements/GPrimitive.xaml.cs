@@ -34,12 +34,8 @@ namespace Gates.GElements
         public GWireHandle ChildWireHandle;
         
         // Transform variables
-        // All transform code adapted from Windows 8.1 SDK "AdvancedManipulations" demo.
+        // All transform code adapted from http://fredbesterwitch.blogspot.com/2011/02/silverlight-drag-drop-snap-to-grid.html
         // Potential manipulation code replacement: http://msdn.microsoft.com/en-us/library/windows/apps/hh465387.aspx
-        private TransformGroup transformGroup;
-        private MatrixTransform previousTransform;
-        private CompositeTransform compositeTransform;
-        private bool forceManipulationsToEnd;
 
         /// <summary>
         /// Create a GPrimitive with the default GateType (AND).
@@ -56,9 +52,7 @@ namespace Gates.GElements
             this.ManipulationStarted += new ManipulationStartedEventHandler(ElementManipulationStarted);
             this.ManipulationDelta += new ManipulationDeltaEventHandler(ElementManipulationDelta);
             this.ManipulationCompleted += new ManipulationCompletedEventHandler(ElementManipulationCompleted);
-            this.ManipulationInertiaStarting += new ManipulationInertiaStartingEventHandler(ElementManipulationInertiaStarting);
 
-            forceManipulationsToEnd = true;
             this.RenderTransform = null;
             InitManipulationTransforms();
         }
@@ -80,9 +74,7 @@ namespace Gates.GElements
             this.ManipulationStarted += new ManipulationStartedEventHandler(ElementManipulationStarted);
             this.ManipulationDelta += new ManipulationDeltaEventHandler(ElementManipulationDelta);
             this.ManipulationCompleted += new ManipulationCompletedEventHandler(ElementManipulationCompleted);
-            this.ManipulationInertiaStarting += new ManipulationInertiaStartingEventHandler(ElementManipulationInertiaStarting);
 
-            forceManipulationsToEnd = true;
             this.RenderTransform = null;
             InitManipulationTransforms();
         }
@@ -93,25 +85,18 @@ namespace Gates.GElements
         #region Manipulation Methods
         private void InitManipulationTransforms()
         {
-            //Initialize the transforms
-            transformGroup = new TransformGroup();
-            compositeTransform = new CompositeTransform();
-            previousTransform = new MatrixTransform() { Matrix = Matrix.Identity };
 
-            transformGroup.Children.Add(previousTransform);
-            transformGroup.Children.Add(compositeTransform);
-
-            this.RenderTransform = transformGroup;
         }
 
         void ElementManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
-            forceManipulationsToEnd = false;
             e.Handled = true;
         }
 
         void ElementManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
+            this.PrimitiveControlImage.Width += 20;
+            this.PrimitiveControlImage.Height += 20;
             e.Handled = true;
         }
 
@@ -122,23 +107,15 @@ namespace Gates.GElements
 
         void ElementManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            if (forceManipulationsToEnd)
-            {
-                e.Complete();
-                return;
-            }
-            //Set the new transform values based on user action
-            previousTransform.Matrix = transformGroup.Value;
-            compositeTransform.TranslateX = e.Delta.Translation.X /*/ Editor.CircuitCanvasScrollViewer.ZoomFactor*/;
-            compositeTransform.TranslateY = e.Delta.Translation.Y /*/ scrollViewer.ZoomFactor*/;
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         void ElementManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
-            e.Handled = true; 
+            this.PrimitiveControlImage.Width -= 20;
+            this.PrimitiveControlImage.Height -= 20;
+            //e.Handled = true; 
 
-            // TODO: Modify the Canvas.Left/TopProperty to match the transform values
             // Fire GPrimitiveMoved event that lets associated GWires update their locations
         }
         #endregion
