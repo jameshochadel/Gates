@@ -136,8 +136,9 @@ namespace Gates.GElements
 
         void ElementManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
-            e.Handled = true; //TODO: Modify the Canvas.Left/TopProperty to match the transform values
+            e.Handled = true; 
 
+            // TODO: Modify the Canvas.Left/TopProperty to match the transform values
             // Fire GPrimitiveMoved event that lets associated GWires update their locations
         }
         #endregion
