@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -53,6 +54,34 @@ namespace Gates
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
             this.BottomAppBar = bottomAppBar;
+
+            // Add grid lines to the canvas
+            for (double x = 1; x < CircuitCanvas.Height; x += 20)
+            {
+                CircuitCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Line()
+                {
+                    X1 = 0,
+                    X2 = CircuitCanvas.Width,
+                    Y1 = x,
+                    Y2 = x,
+                    Stroke = new SolidColorBrush(Colors.LightGray),
+                    StrokeThickness = .50
+                });
+            }
+
+            for (double x = 1; x < CircuitCanvas.Width; x += 20)
+            {
+                CircuitCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Line()
+                {
+                    X1 = x,
+                    X2 = x,
+                    Y1 = CircuitCanvas.Height,
+                    Y2 = 0,
+                    Stroke = new SolidColorBrush(Colors.LightGray),
+                    StrokeThickness = .50
+                });
+            }
+
 
             GWire TestWire = new GWire(10,10,50,50);
             CircuitCanvas.Children.Add(TestWire);
