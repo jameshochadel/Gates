@@ -31,7 +31,6 @@ namespace Gates.GElements
 
             this.InitializeComponent();
         }
-        //HVH
 
         /// <summary>
         /// Create a GWire from the xy coordinates of two GPrimitives.
@@ -45,16 +44,17 @@ namespace Gates.GElements
         {
             model = new GWireModel();
             this.DataContext = model;
-            WirePath.DataContext = this;
-
-            PathData = CalculatePathSegmentsFromParentCoordinates(x1, y1, x2, y2);
-
             this.InitializeComponent();
+
+            WirePath.DataContext = this;
+            
+            PathData = CalculatePathSegmentsFromParentCoordinates(x1, y1, x2, y2);
         }
 
         /// <summary>
-        /// Encodes a string with Move & Draw commands describing the path
+        /// Encodes a string with Move & Draw commands describing the path.
         /// </summary>
+        /// <remarks>Makes a lot of assumptions about parents' locations. No pathfinding like LabView; only has three segments.</remarks>
         /// <param name="x1"></param>
         /// <param name="y1"></param>
         /// <param name="x2"></param>
@@ -67,14 +67,15 @@ namespace Gates.GElements
             double pathHeight = Math.Abs(x1 - x2);;
             double pathWidth = Math.Abs(y1 - y2);;
 
+            // Note whether each is relative to the last
             string nCoords = String.Format("{0},{1}", x1, y1);
             string h1Coords = (pathWidth / 2.0).ToString();
-            string v1Coords = y2.ToString();
-            string h2Coords = x2.ToString();
+            string V1Coords = y2.ToString();
+            string H2Coords = x2.ToString();
 
             StringWriter writer = new StringWriter();
 
-            path = string.Format("N{0} h{1} v{2} h{3} z", nCoords, h1Coords, v1Coords, h2Coords);
+            path = string.Format("N{0} h{1} V{2} H{3} z", nCoords, h1Coords, V1Coords, H2Coords);
             return path;
         }
 

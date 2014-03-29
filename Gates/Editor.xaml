@@ -88,8 +88,10 @@
                 ZoomMode="Enabled"
                 MaxZoomFactor="2.0"
                 MinZoomFactor="0.5">
+                <!-- TODO: Give this guy a wire layer and primitive layer-->
                 <Canvas x:Name="CircuitCanvas" Height="3000" Width="4000">
                     <G:GPrimitive x:Name="TestPrimitive" GateType="0" Canvas.Left="207" Canvas.Top="129" />
+                    
                 </Canvas>
             </ScrollViewer>
         </Grid>

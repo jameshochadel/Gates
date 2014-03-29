@@ -53,6 +53,9 @@ namespace Gates
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
             this.BottomAppBar = bottomAppBar;
+
+            GWire TestWire = new GWire(10,10,50,50);
+            CircuitCanvas.Children.Add(TestWire);
         }
 
         /// <summary>
