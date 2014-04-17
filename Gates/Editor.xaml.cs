@@ -113,8 +113,6 @@ namespace Gates
         {
         }
 
-
-
         #region NavigationHelper registration
 
         /// The methods provided in this section are simply used to allow
@@ -165,7 +163,7 @@ namespace Gates
         #endregion
 
         /// <summary>
-        /// Round the position to the nearest grid coords
+        /// Round user control position to the nearest grid coords
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -266,7 +264,6 @@ namespace Gates
         }
         #endregion
 
-
         #region GStaticInput Event Handlers
         private void s_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
@@ -303,6 +300,13 @@ namespace Gates
         private void g_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             GPrimitive g = sender as GPrimitive;
+
+            // remove the WireHandle if one exists
+            if (g.ChildWireHandle != null)
+            {
+                CircuitCanvas.Children.Remove(g.ChildWireHandle);
+                g.ChildWireHandle = null;
+            }
 
             Canvas.SetLeft(g, (Canvas.GetLeft(g) + e.Delta.Translation.X));
             Canvas.SetTop(g, (Canvas.GetTop(g) + e.Delta.Translation.Y));
@@ -360,6 +364,7 @@ namespace Gates
         {
             GPrimitive g = sender as GPrimitive;
             //if it hasn't been attached to something, then remove it. If it has, return.
+
             CircuitCanvas.Children.Remove(g.ChildWireHandle);
             g.ChildWireHandle = null;
         }
