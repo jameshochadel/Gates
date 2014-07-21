@@ -293,8 +293,8 @@ namespace Gates
         /// <param name="e"></param>
         private void g_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            // Determine the type of the object being manipulated. Possibly extract
-            GComponent g = sender as GPrimitive;
+            // This will break if a GStaticInput is manipulated. Need more robust code to handle ChildWireHandle stuff
+            GPrimitive g = sender as GPrimitive;
 
             //// remove the WireHandle if one exists
             //if (g.ChildWireHandle != null)
