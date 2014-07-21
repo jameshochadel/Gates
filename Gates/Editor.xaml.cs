@@ -207,12 +207,7 @@ namespace Gates
         {
             AppBarButton b = sender as AppBarButton;
             GElements.GPrimitive g = new GElements.GPrimitive(0);
-            g.GPrimitive_PointerEntered += g_GPrimitive_PointerEntered;
-            g.GPrimitive_PointerExited += g_GPrimitive_PointerExited;
-            g.GPrimitive_Tapped += g_GPrimitive_Tapped;
-            g.GPrimitive_RightTapped += g_GPrimitive_RightTapped;
-            g.ManipulationDelta += g_ManipulationDelta;
-            g.ManipulationCompleted += g_ManipulationCompleted;
+            IntializeManipulation(g);
             g.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
             if (b == CommandBarAddPrimitiveAnd)
@@ -246,8 +241,7 @@ namespace Gates
         private void CommandBarAddStaticInput_Click(object sender, RoutedEventArgs e)
         {
             GStaticInput g = new GStaticInput();
-            g.ManipulationDelta += s_ManipulationDelta;
-            g.ManipulationCompleted += s_ManipulationCompleted;
+            IntializeManipulation(g);
             CircuitCanvas.Children.Add(g);
         }
 
@@ -263,7 +257,7 @@ namespace Gates
             }
         }
         #endregion
-
+        /*
         #region GStaticInput Event Handlers
         private void s_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
@@ -289,24 +283,25 @@ namespace Gates
 
             e.Handled = true;
         }
-        #endregion
+        #endregion*/
 
         #region GPrimitive Event Handlers
         /// <summary>
-        /// Alter primitive location when cursor moves
+        /// Alter canvas element location when cursor moves
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">An object of type GPrimitive or GStaticInput</param>
         /// <param name="e"></param>
         private void g_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            GPrimitive g = sender as GPrimitive;
+            // Determine the type of the object being manipulated. Possibly extract
+            GComponent g = sender as GPrimitive;
 
-            // remove the WireHandle if one exists
-            if (g.ChildWireHandle != null)
-            {
-                CircuitCanvas.Children.Remove(g.ChildWireHandle);
-                g.ChildWireHandle = null;
-            }
+            //// remove the WireHandle if one exists
+            //if (g.ChildWireHandle != null)
+            //{
+            //    CircuitCanvas.Children.Remove(g.ChildWireHandle);
+            //    g.ChildWireHandle = null;
+            //}
 
             Canvas.SetLeft(g, (Canvas.GetLeft(g) + e.Delta.Translation.X));
             Canvas.SetTop(g, (Canvas.GetTop(g) + e.Delta.Translation.Y));
@@ -363,10 +358,16 @@ namespace Gates
         private void g_GPrimitive_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             GPrimitive g = sender as GPrimitive;
-            //if it hasn't been attached to something, then remove it. If it has, return.
-
-            CircuitCanvas.Children.Remove(g.ChildWireHandle);
-            g.ChildWireHandle = null;
+            // If focus is now on child GPrimitiveHandle, don't remove it
+            // How: Check if GPrimitiveHandle_PointerEntered event was thrown?
+            if (g.ChildWireHandle != null) {
+                if (true /*g.ChildWireHandle.PointerEntered*/)
+                {
+                    CircuitCanvas.Children.Remove(g.ChildWireHandle);
+                    g.ChildWireHandle = null;
+                }       
+            }
+              
         }
 
         private void g_GPrimitive_Tapped(object sender, TappedRoutedEventArgs e)
@@ -449,6 +450,40 @@ namespace Gates
             throw new NotImplementedException();
         }
         #endregion
+
+        /// <summary>
+        /// Get an object ready to be manipulated
+        /// </summary>
+        /// <param name="sender"></param>
+        private void IntializeManipulation(Object sender)
+        {
+            System.Type elementType = sender.GetType();
+
+            if (elementType == typeof(GPrimitive))
+            {
+                GPrimitive g = sender as GPrimitive;
+                g.GPrimitive_PointerEntered += g_GPrimitive_PointerEntered;
+                g.GPrimitive_PointerExited += g_GPrimitive_PointerExited;
+                g.GPrimitive_Tapped += g_GPrimitive_Tapped;
+                g.GPrimitive_RightTapped += g_GPrimitive_RightTapped;
+                g.ManipulationDelta += g_ManipulationDelta;
+                g.ManipulationCompleted += g_ManipulationCompleted;
+
+                sender = g;
+            }
+            else if (elementType == typeof(GStaticInput))
+            {
+                GStaticInput g = sender as GStaticInput;
+                //g.GPrimitive_PointerEntered += g_GPrimitive_PointerEntered;
+                //g.GPrimitive_PointerExited += g_GPrimitive_PointerExited;
+                //g.GPrimitive_Tapped += g_GPrimitive_Tapped;
+                //g.GPrimitive_RightTapped += g_GPrimitive_RightTapped;
+                g.ManipulationDelta += g_ManipulationDelta;
+                g.ManipulationCompleted += g_ManipulationCompleted;
+
+                sender = g;
+            }
+        }
 
         public class DeleteGPrimitiveEventArgs : RoutedEventArgs
         {

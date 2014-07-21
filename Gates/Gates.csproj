@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="GElements\GWireModel.cs" />
     <Compile Include="Helper Classes\InputValuesContainer.cs" />
+    <Compile Include="Helper Classes\ManipulationHelper.cs" />
     <Compile Include="Helper Classes\OutputValuesContainer.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -157,6 +158,7 @@
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square30x30Logo.scale-100.png" />
+    <Content Include="Assets\Square310x310Logo.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Common\ReadMe.txt" />
     <Page Include="GElements\GStaticInput.xaml">

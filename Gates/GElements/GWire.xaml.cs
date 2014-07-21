@@ -54,7 +54,8 @@ namespace Gates.GElements
         /// <summary>
         /// Encodes a string with Move & Draw commands describing the path.
         /// </summary>
-        /// <remarks>Makes a lot of assumptions about parents' locations. No pathfinding like LabView; only has three segments.</remarks>
+        /// <remarks>Makes a lot of assumptions about parents' locations. No pathfinding like LabView; only has three segments.
+        /// Pretty sure this is getting trashed in favor of the pathfinding algorithm worked out at HackCWRU.</remarks>
         /// <param name="x1"></param>
         /// <param name="y1"></param>
         /// <param name="x2"></param>

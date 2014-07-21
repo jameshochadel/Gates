@@ -27,7 +27,7 @@ namespace Gates.GElements
     /// When instantiating a new GPrimitive on the Editor canvas, be sure to subscribe its event 
     /// handlers to the proper events, or the GPrimitive won't do much.
     /// </remarks>
-    public sealed partial class GPrimitive : UserControl
+    public sealed partial class GPrimitive : UserControl // TODO: Inherit interface InputCapableControl and OutputCapableControl
     {
         // Model containing data about this GPrimitive
         private GPrimitiveModel model { get; set; }
@@ -54,7 +54,6 @@ namespace Gates.GElements
             this.ManipulationCompleted += new ManipulationCompletedEventHandler(ElementManipulationCompleted);
 
             this.RenderTransform = null;
-            InitManipulationTransforms();
         }
 
         /// <summary>
@@ -76,17 +75,12 @@ namespace Gates.GElements
             this.ManipulationCompleted += new ManipulationCompletedEventHandler(ElementManipulationCompleted);
 
             this.RenderTransform = null;
-            InitManipulationTransforms();
         }
 
         /// <summary>
         /// Code for manipulating the GPrimitive on the application canvas.
         /// </summary>
         #region Manipulation Methods
-        private void InitManipulationTransforms()
-        {
-
-        }
 
         void ElementManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
